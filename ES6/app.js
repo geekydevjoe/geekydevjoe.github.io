@@ -1,7 +1,7 @@
-import Vacation from './vacation'     
-import Expedition from './expedition'     
-import freel from './mt-freel'
-import { pring, log } from './text-helpers'
+import Vacation from './vacation.js'     
+import Expedition from './expedition.js'     
+import freel from './mt-freel.js'
+import { pring, log } from './text-helpers.js'
 
 
 //const trip = new Expedition("Mt. Whitney", 3, ["sunglasses", "prayer flags"])
