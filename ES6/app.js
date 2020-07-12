@@ -1,6 +1,6 @@
 import Vacation from './vacation.js'     
 import Expedition from './expedition.js'     
-import freel from './mt-freel.js'
+//import freel from './mt-freel.js'
 import { pring, log } from './text-helpers.js'
 
 

@@ -1,4 +1,4 @@
-import Vacation from './vacation'
+import Vacation from './vacation.js'
 
 class Expedition extends Vacation {
     constructor(destination, length, gear){
