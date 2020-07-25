@@ -1,0 +1,8 @@
+ko.components.register('sort-column', {
+    viewModel : function(params){
+        this.displayName = params.displayName,
+        this.column = params.column,
+        this.sort = function(){ params.sort(this.column); }
+    },
+    template:'<th data-bind="text: displayName, click: sort"></th>'
+});

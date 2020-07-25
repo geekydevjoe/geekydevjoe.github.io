@@ -1,0 +1,962 @@
+[
+    {
+      "date": "2020/03/16 12:00:00-07:00",
+      "state": "California",
+      "cases": 588,
+      "deaths": 11,
+      "NewCases": 110,
+      "NewDeaths": 5
+    },
+    {
+      "date": "2020/03/17 12:00:00-07:00",
+      "state": "California",
+      "cases": 732,
+      "deaths": 14,
+      "NewCases": 144,
+      "NewDeaths": 3
+    },
+    {
+      "date": "2020/03/18 12:00:00-07:00",
+      "state": "California",
+      "cases": 893,
+      "deaths": 17,
+      "NewCases": 161,
+      "NewDeaths": 3
+    },
+    {
+      "date": "2020/03/19 12:00:00-07:00",
+      "state": "California",
+      "cases": 1067,
+      "deaths": 19,
+      "NewCases": 174,
+      "NewDeaths": 2
+    },
+    {
+      "date": "2020/03/20 12:00:00-07:00",
+      "state": "California",
+      "cases": 1283,
+      "deaths": 24,
+      "NewCases": 216,
+      "NewDeaths": 5
+    },
+    {
+      "date": "2020/03/21 12:00:00-07:00",
+      "state": "California",
+      "cases": 1544,
+      "deaths": 28,
+      "NewCases": 261,
+      "NewDeaths": 4
+    },
+    {
+      "date": "2020/03/22 12:00:00-07:00",
+      "state": "California",
+      "cases": 1851,
+      "deaths": 35,
+      "NewCases": 307,
+      "NewDeaths": 7
+    },
+    {
+      "date": "2020/03/23 12:00:00-07:00",
+      "state": "California",
+      "cases": 2240,
+      "deaths": 39,
+      "NewCases": 389,
+      "NewDeaths": 4
+    },
+    {
+      "date": "2020/03/24 12:00:00-07:00",
+      "state": "California",
+      "cases": 2644,
+      "deaths": 52,
+      "NewCases": 404,
+      "NewDeaths": 13
+    },
+    {
+      "date": "2020/03/25 12:00:00-07:00",
+      "state": "California",
+      "cases": 3183,
+      "deaths": 67,
+      "NewCases": 539,
+      "NewDeaths": 15
+    },
+    {
+      "date": "2020/03/26 12:00:00-07:00",
+      "state": "California",
+      "cases": 4060,
+      "deaths": 82,
+      "NewCases": 877,
+      "NewDeaths": 15
+    },
+    {
+      "date": "2020/03/27 12:00:00-07:00",
+      "state": "California",
+      "cases": 4914,
+      "deaths": 102,
+      "NewCases": 854,
+      "NewDeaths": 20
+    },
+    {
+      "date": "2020/03/28 12:00:00-07:00",
+      "state": "California",
+      "cases": 5565,
+      "deaths": 121,
+      "NewCases": 651,
+      "NewDeaths": 19
+    },
+    {
+      "date": "2020/03/29 12:00:00-07:00",
+      "state": "California",
+      "cases": 6266,
+      "deaths": 130,
+      "NewCases": 701,
+      "NewDeaths": 9
+    },
+    {
+      "date": "2020/03/30 12:00:00-07:00",
+      "state": "California",
+      "cases": 7421,
+      "deaths": 146,
+      "NewCases": 1155,
+      "NewDeaths": 16
+    },
+    {
+      "date": "2020/03/31 12:00:00-07:00",
+      "state": "California",
+      "cases": 8582,
+      "deaths": 183,
+      "NewCases": 1161,
+      "NewDeaths": 37
+    },
+    {
+      "date": "2020/04/01 12:00:00-07:00",
+      "state": "California",
+      "cases": 9816,
+      "deaths": 212,
+      "NewCases": 1234,
+      "NewDeaths": 29
+    },
+    {
+      "date": "2020/04/02 12:00:00-07:00",
+      "state": "California",
+      "cases": 10995,
+      "deaths": 243,
+      "NewCases": 1179,
+      "NewDeaths": 31
+    },
+    {
+      "date": "2020/04/03 12:00:00-07:00",
+      "state": "California",
+      "cases": 12569,
+      "deaths": 282,
+      "NewCases": 1574,
+      "NewDeaths": 39
+    },
+    {
+      "date": "2020/04/04 12:00:00-07:00",
+      "state": "California",
+      "cases": 13796,
+      "deaths": 323,
+      "NewCases": 1227,
+      "NewDeaths": 41
+    },
+    {
+      "date": "2020/04/05 12:00:00-07:00",
+      "state": "California",
+      "cases": 15076,
+      "deaths": 349,
+      "NewCases": 1280,
+      "NewDeaths": 26
+    },
+    {
+      "date": "2020/04/06 12:00:00-07:00",
+      "state": "California",
+      "cases": 16284,
+      "deaths": 386,
+      "NewCases": 1208,
+      "NewDeaths": 37
+    },
+    {
+      "date": "2020/04/07 12:00:00-07:00",
+      "state": "California",
+      "cases": 17540,
+      "deaths": 447,
+      "NewCases": 1256,
+      "NewDeaths": 61
+    },
+    {
+      "date": "2020/04/08 12:00:00-07:00",
+      "state": "California",
+      "cases": 19043,
+      "deaths": 506,
+      "NewCases": 1503,
+      "NewDeaths": 59
+    },
+    {
+      "date": "2020/04/09 12:00:00-07:00",
+      "state": "California",
+      "cases": 20191,
+      "deaths": 548,
+      "NewCases": 1148,
+      "NewDeaths": 42
+    },
+    {
+      "date": "2020/04/10 12:00:00-07:00",
+      "state": "California",
+      "cases": 21366,
+      "deaths": 624,
+      "NewCases": 1175,
+      "NewDeaths": 76
+    },
+    {
+      "date": "2020/04/11 12:00:00-07:00",
+      "state": "California",
+      "cases": 22421,
+      "deaths": 632,
+      "NewCases": 1055,
+      "NewDeaths": 8
+    },
+    {
+      "date": "2020/04/12 12:00:00-07:00",
+      "state": "California",
+      "cases": 23323,
+      "deaths": 676,
+      "NewCases": 902,
+      "NewDeaths": 44
+    },
+    {
+      "date": "2020/04/13 12:00:00-07:00",
+      "state": "California",
+      "cases": 24334,
+      "deaths": 725,
+      "NewCases": 1011,
+      "NewDeaths": 49
+    },
+    {
+      "date": "2020/04/14 12:00:00-07:00",
+      "state": "California",
+      "cases": 25758,
+      "deaths": 778,
+      "NewCases": 1424,
+      "NewDeaths": 53
+    },
+    {
+      "date": "2020/04/15 12:00:00-07:00",
+      "state": "California",
+      "cases": 27107,
+      "deaths": 885,
+      "NewCases": 1349,
+      "NewDeaths": 107
+    },
+    {
+      "date": "2020/04/16 12:00:00-07:00",
+      "state": "California",
+      "cases": 28142,
+      "deaths": 971,
+      "NewCases": 1035,
+      "NewDeaths": 86
+    },
+    {
+      "date": "2020/04/17 12:00:00-07:00",
+      "state": "California",
+      "cases": 29398,
+      "deaths": 1050,
+      "NewCases": 1256,
+      "NewDeaths": 79
+    },
+    {
+      "date": "2020/04/18 12:00:00-07:00",
+      "state": "California",
+      "cases": 30829,
+      "deaths": 1146,
+      "NewCases": 1431,
+      "NewDeaths": 96
+    },
+    {
+      "date": "2020/04/19 12:00:00-07:00",
+      "state": "California",
+      "cases": 31544,
+      "deaths": 1176,
+      "NewCases": 715,
+      "NewDeaths": 30
+    },
+    {
+      "date": "2020/04/20 12:00:00-07:00",
+      "state": "California",
+      "cases": 33862,
+      "deaths": 1223,
+      "NewCases": 2318,
+      "NewDeaths": 47
+    },
+    {
+      "date": "2020/04/21 12:00:00-07:00",
+      "state": "California",
+      "cases": 35844,
+      "deaths": 1316,
+      "NewCases": 1982,
+      "NewDeaths": 93
+    },
+    {
+      "date": "2020/04/22 12:00:00-07:00",
+      "state": "California",
+      "cases": 37573,
+      "deaths": 1425,
+      "NewCases": 1729,
+      "NewDeaths": 109
+    },
+    {
+      "date": "2020/04/23 12:00:00-07:00",
+      "state": "California",
+      "cases": 39534,
+      "deaths": 1553,
+      "NewCases": 1961,
+      "NewDeaths": 128
+    },
+    {
+      "date": "2020/04/24 12:00:00-07:00",
+      "state": "California",
+      "cases": 41368,
+      "deaths": 1619,
+      "NewCases": 1834,
+      "NewDeaths": 66
+    },
+    {
+      "date": "2020/04/25 12:00:00-07:00",
+      "state": "California",
+      "cases": 42590,
+      "deaths": 1692,
+      "NewCases": 1222,
+      "NewDeaths": 73
+    },
+    {
+      "date": "2020/04/26 12:00:00-07:00",
+      "state": "California",
+      "cases": 43691,
+      "deaths": 1716,
+      "NewCases": 1101,
+      "NewDeaths": 24
+    },
+    {
+      "date": "2020/04/27 12:00:00-07:00",
+      "state": "California",
+      "cases": 45187,
+      "deaths": 1800,
+      "NewCases": 1496,
+      "NewDeaths": 84
+    },
+    {
+      "date": "2020/04/28 12:00:00-07:00",
+      "state": "California",
+      "cases": 46570,
+      "deaths": 1884,
+      "NewCases": 1383,
+      "NewDeaths": 84
+    },
+    {
+      "date": "2020/04/29 12:00:00-07:00",
+      "state": "California",
+      "cases": 48904,
+      "deaths": 1961,
+      "NewCases": 2334,
+      "NewDeaths": 77
+    },
+    {
+      "date": "2020/04/30 12:00:00-07:00",
+      "state": "California",
+      "cases": 50470,
+      "deaths": 2057,
+      "NewCases": 1566,
+      "NewDeaths": 96
+    },
+    {
+      "date": "2020/05/01 12:00:00-07:00",
+      "state": "California",
+      "cases": 52318,
+      "deaths": 2147,
+      "NewCases": 1848,
+      "NewDeaths": 90
+    },
+    {
+      "date": "2020/05/02 12:00:00-07:00",
+      "state": "California",
+      "cases": 53753,
+      "deaths": 2213,
+      "NewCases": 1435,
+      "NewDeaths": 66
+    },
+    {
+      "date": "2020/05/03 12:00:00-07:00",
+      "state": "California",
+      "cases": 55072,
+      "deaths": 2235,
+      "NewCases": 1319,
+      "NewDeaths": 22
+    },
+    {
+      "date": "2020/05/04 12:00:00-07:00",
+      "state": "California",
+      "cases": 56333,
+      "deaths": 2297,
+      "NewCases": 1261,
+      "NewDeaths": 62
+    },
+    {
+      "date": "2020/05/05 12:00:00-07:00",
+      "state": "California",
+      "cases": 58848,
+      "deaths": 2386,
+      "NewCases": 2515,
+      "NewDeaths": 89
+    },
+    {
+      "date": "2020/05/06 12:00:00-07:00",
+      "state": "California",
+      "cases": 60787,
+      "deaths": 2478,
+      "NewCases": 1939,
+      "NewDeaths": 92
+    },
+    {
+      "date": "2020/05/07 12:00:00-07:00",
+      "state": "California",
+      "cases": 62481,
+      "deaths": 2561,
+      "NewCases": 1694,
+      "NewDeaths": 83
+    },
+    {
+      "date": "2020/05/08 12:00:00-07:00",
+      "state": "California",
+      "cases": 64616,
+      "deaths": 2650,
+      "NewCases": 2135,
+      "NewDeaths": 89
+    },
+    {
+      "date": "2020/05/09 12:00:00-07:00",
+      "state": "California",
+      "cases": 66824,
+      "deaths": 2732,
+      "NewCases": 2208,
+      "NewDeaths": 82
+    },
+    {
+      "date": "2020/05/10 12:00:00-07:00",
+      "state": "California",
+      "cases": 68051,
+      "deaths": 2769,
+      "NewCases": 1227,
+      "NewDeaths": 37
+    },
+    {
+      "date": "2020/05/11 12:00:00-07:00",
+      "state": "California",
+      "cases": 69514,
+      "deaths": 2820,
+      "NewCases": 1463,
+      "NewDeaths": 51
+    },
+    {
+      "date": "2020/05/12 12:00:00-07:00",
+      "state": "California",
+      "cases": 71150,
+      "deaths": 2902,
+      "NewCases": 1636,
+      "NewDeaths": 82
+    },
+    {
+      "date": "2020/05/13 12:00:00-07:00",
+      "state": "California",
+      "cases": 73218,
+      "deaths": 3014,
+      "NewCases": 2068,
+      "NewDeaths": 112
+    },
+    {
+      "date": "2020/05/14 12:00:00-07:00",
+      "state": "California",
+      "cases": 74947,
+      "deaths": 3039,
+      "NewCases": 1729,
+      "NewDeaths": 25
+    },
+    {
+      "date": "2020/05/15 12:00:00-07:00",
+      "state": "California",
+      "cases": 77015,
+      "deaths": 3192,
+      "NewCases": 2068,
+      "NewDeaths": 153
+    },
+    {
+      "date": "2020/05/16 12:00:00-07:00",
+      "state": "California",
+      "cases": 78933,
+      "deaths": 3254,
+      "NewCases": 1918,
+      "NewDeaths": 62
+    },
+    {
+      "date": "2020/05/17 12:00:00-07:00",
+      "state": "California",
+      "cases": 80366,
+      "deaths": 3290,
+      "NewCases": 1433,
+      "NewDeaths": 36
+    },
+    {
+      "date": "2020/05/18 12:00:00-07:00",
+      "state": "California",
+      "cases": 81943,
+      "deaths": 3322,
+      "NewCases": 1577,
+      "NewDeaths": 32
+    },
+    {
+      "date": "2020/05/19 12:00:00-07:00",
+      "state": "California",
+      "cases": 83981,
+      "deaths": 3422,
+      "NewCases": 2038,
+      "NewDeaths": 100
+    },
+    {
+      "date": "2020/05/20 12:00:00-07:00",
+      "state": "California",
+      "cases": 86125,
+      "deaths": 3514,
+      "NewCases": 2144,
+      "NewDeaths": 92
+    },
+    {
+      "date": "2020/05/21 12:00:00-07:00",
+      "state": "California",
+      "cases": 88488,
+      "deaths": 3624,
+      "NewCases": 2363,
+      "NewDeaths": 110
+    },
+    {
+      "date": "2020/05/22 12:00:00-07:00",
+      "state": "California",
+      "cases": 90801,
+      "deaths": 3690,
+      "NewCases": 2313,
+      "NewDeaths": 66
+    },
+    {
+      "date": "2020/05/23 12:00:00-07:00",
+      "state": "California",
+      "cases": 92815,
+      "deaths": 3768,
+      "NewCases": 2014,
+      "NewDeaths": 78
+    },
+    {
+      "date": "2020/05/24 12:00:00-07:00",
+      "state": "California",
+      "cases": 94743,
+      "deaths": 3790,
+      "NewCases": 1928,
+      "NewDeaths": 22
+    },
+    {
+      "date": "2020/05/25 12:00:00-07:00",
+      "state": "California",
+      "cases": 97017,
+      "deaths": 3808,
+      "NewCases": 2274,
+      "NewDeaths": 18
+    },
+    {
+      "date": "2020/05/26 12:00:00-07:00",
+      "state": "California",
+      "cases": 99924,
+      "deaths": 3859,
+      "NewCases": 2907,
+      "NewDeaths": 51
+    },
+    {
+      "date": "2020/05/27 12:00:00-07:00",
+      "state": "California",
+      "cases": 101873,
+      "deaths": 3961,
+      "NewCases": 1949,
+      "NewDeaths": 102
+    },
+    {
+      "date": "2020/05/28 12:00:00-07:00",
+      "state": "California",
+      "cases": 104071,
+      "deaths": 4042,
+      "NewCases": 2198,
+      "NewDeaths": 81
+    },
+    {
+      "date": "2020/05/29 12:00:00-07:00",
+      "state": "California",
+      "cases": 107043,
+      "deaths": 4144,
+      "NewCases": 2972,
+      "NewDeaths": 102
+    },
+    {
+      "date": "2020/05/30 12:00:00-07:00",
+      "state": "California",
+      "cases": 110100,
+      "deaths": 4214,
+      "NewCases": 3057,
+      "NewDeaths": 70
+    },
+    {
+      "date": "2020/05/31 12:00:00-07:00",
+      "state": "California",
+      "cases": 113114,
+      "deaths": 4242,
+      "NewCases": 3014,
+      "NewDeaths": 28
+    },
+    {
+      "date": "2020/06/01 12:00:00-07:00",
+      "state": "California",
+      "cases": 115643,
+      "deaths": 4287,
+      "NewCases": 2529,
+      "NewDeaths": 45
+    },
+    {
+      "date": "2020/06/02 12:00:00-07:00",
+      "state": "California",
+      "cases": 118081,
+      "deaths": 4360,
+      "NewCases": 2438,
+      "NewDeaths": 73
+    },
+    {
+      "date": "2020/06/03 12:00:00-07:00",
+      "state": "California",
+      "cases": 120407,
+      "deaths": 4422,
+      "NewCases": 2326,
+      "NewDeaths": 62
+    },
+    {
+      "date": "2020/06/04 12:00:00-07:00",
+      "state": "California",
+      "cases": 122917,
+      "deaths": 4484,
+      "NewCases": 2510,
+      "NewDeaths": 62
+    },
+    {
+      "date": "2020/06/05 12:00:00-07:00",
+      "state": "California",
+      "cases": 126510,
+      "deaths": 4550,
+      "NewCases": 3593,
+      "NewDeaths": 66
+    },
+    {
+      "date": "2020/06/06 12:00:00-07:00",
+      "state": "California",
+      "cases": 129147,
+      "deaths": 4626,
+      "NewCases": 2637,
+      "NewDeaths": 76
+    },
+    {
+      "date": "2020/06/07 12:00:00-07:00",
+      "state": "California",
+      "cases": 131997,
+      "deaths": 4653,
+      "NewCases": 2850,
+      "NewDeaths": 27
+    },
+    {
+      "date": "2020/06/08 12:00:00-07:00",
+      "state": "California",
+      "cases": 134287,
+      "deaths": 4679,
+      "NewCases": 2290,
+      "NewDeaths": 26
+    },
+    {
+      "date": "2020/06/09 12:00:00-07:00",
+      "state": "California",
+      "cases": 137245,
+      "deaths": 4775,
+      "NewCases": 2958,
+      "NewDeaths": 96
+    },
+    {
+      "date": "2020/06/10 12:00:00-07:00",
+      "state": "California",
+      "cases": 140139,
+      "deaths": 4869,
+      "NewCases": 2894,
+      "NewDeaths": 94
+    },
+    {
+      "date": "2020/06/11 12:00:00-07:00",
+      "state": "California",
+      "cases": 143709,
+      "deaths": 4941,
+      "NewCases": 3570,
+      "NewDeaths": 72
+    },
+    {
+      "date": "2020/06/12 12:00:00-07:00",
+      "state": "California",
+      "cases": 147285,
+      "deaths": 4986,
+      "NewCases": 3576,
+      "NewDeaths": 45
+    },
+    {
+      "date": "2020/06/13 12:00:00-07:00",
+      "state": "California",
+      "cases": 150434,
+      "deaths": 5059,
+      "NewCases": 3149,
+      "NewDeaths": 73
+    },
+    {
+      "date": "2020/06/14 12:00:00-07:00",
+      "state": "California",
+      "cases": 152953,
+      "deaths": 5089,
+      "NewCases": 2519,
+      "NewDeaths": 30
+    },
+    {
+      "date": "2020/06/15 12:00:00-07:00",
+      "state": "California",
+      "cases": 155662,
+      "deaths": 5120,
+      "NewCases": 2709,
+      "NewDeaths": 31
+    },
+    {
+      "date": "2020/06/16 12:00:00-07:00",
+      "state": "California",
+      "cases": 159131,
+      "deaths": 5202,
+      "NewCases": 3469,
+      "NewDeaths": 82
+    },
+    {
+      "date": "2020/06/17 12:00:00-07:00",
+      "state": "California",
+      "cases": 163381,
+      "deaths": 5283,
+      "NewCases": 4250,
+      "NewDeaths": 81
+    },
+    {
+      "date": "2020/06/18 12:00:00-07:00",
+      "state": "California",
+      "cases": 167135,
+      "deaths": 5359,
+      "NewCases": 3754,
+      "NewDeaths": 76
+    },
+    {
+      "date": "2020/06/19 12:00:00-07:00",
+      "state": "California",
+      "cases": 170843,
+      "deaths": 5425,
+      "NewCases": 3708,
+      "NewDeaths": 66
+    },
+    {
+      "date": "2020/06/20 12:00:00-07:00",
+      "state": "California",
+      "cases": 174854,
+      "deaths": 5495,
+      "NewCases": 4011,
+      "NewDeaths": 70
+    },
+    {
+      "date": "2020/06/21 12:00:00-07:00",
+      "state": "California",
+      "cases": 178807,
+      "deaths": 5517,
+      "NewCases": 3953,
+      "NewDeaths": 22
+    },
+    {
+      "date": "2020/06/22 12:00:00-07:00",
+      "state": "California",
+      "cases": 184620,
+      "deaths": 5561,
+      "NewCases": 5813,
+      "NewDeaths": 44
+    },
+    {
+      "date": "2020/06/23 12:00:00-07:00",
+      "state": "California",
+      "cases": 191039,
+      "deaths": 5637,
+      "NewCases": 6419,
+      "NewDeaths": 76
+    },
+    {
+      "date": "2020/06/24 12:00:00-07:00",
+      "state": "California",
+      "cases": 195889,
+      "deaths": 5728,
+      "NewCases": 4850,
+      "NewDeaths": 91
+    },
+    {
+      "date": "2020/06/25 12:00:00-07:00",
+      "state": "California",
+      "cases": 201413,
+      "deaths": 5810,
+      "NewCases": 5524,
+      "NewDeaths": 82
+    },
+    {
+      "date": "2020/06/26 12:00:00-07:00",
+      "state": "California",
+      "cases": 207027,
+      "deaths": 5872,
+      "NewCases": 5614,
+      "NewDeaths": 62
+    },
+    {
+      "date": "2020/06/27 12:00:00-07:00",
+      "state": "California",
+      "cases": 211453,
+      "deaths": 5902,
+      "NewCases": 4426,
+      "NewDeaths": 30
+    },
+    {
+      "date": "2020/06/28 12:00:00-07:00",
+      "state": "California",
+      "cases": 216955,
+      "deaths": 5937,
+      "NewCases": 5502,
+      "NewDeaths": 35
+    },
+    {
+      "date": "2020/06/29 12:00:00-07:00",
+      "state": "California",
+      "cases": 223995,
+      "deaths": 5979,
+      "NewCases": 7040,
+      "NewDeaths": 42
+    },
+    {
+      "date": "2020/06/30 12:00:00-07:00",
+      "state": "California",
+      "cases": 232153,
+      "deaths": 6083,
+      "NewCases": 8158,
+      "NewDeaths": 104
+    },
+    {
+      "date": "2020/07/01 12:00:00-07:00",
+      "state": "California",
+      "cases": 239764,
+      "deaths": 6168,
+      "NewCases": 7611,
+      "NewDeaths": 85
+    },
+    {
+      "date": "2020/07/02 12:00:00-07:00",
+      "state": "California",
+      "cases": 248198,
+      "deaths": 6263,
+      "NewCases": 8434,
+      "NewDeaths": 95
+    },
+    {
+      "date": "2020/07/03 12:00:00-07:00",
+      "state": "California",
+      "cases": 256298,
+      "deaths": 6315,
+      "NewCases": 8100,
+      "NewDeaths": 52
+    },
+    {
+      "date": "2020/07/04 12:00:00-07:00",
+      "state": "California",
+      "cases": 265176,
+      "deaths": 6329,
+      "NewCases": 8878,
+      "NewDeaths": 14
+    },
+    {
+      "date": "2020/07/05 12:00:00-07:00",
+      "state": "California",
+      "cases": 271587,
+      "deaths": 6369,
+      "NewCases": 6411,
+      "NewDeaths": 40
+    },
+    {
+      "date": "2020/07/06 12:00:00-07:00",
+      "state": "California",
+      "cases": 277869,
+      "deaths": 6452,
+      "NewCases": 6282,
+      "NewDeaths": 83
+    },
+    {
+      "date": "2020/07/07 12:00:00-07:00",
+      "state": "California",
+      "cases": 287766,
+      "deaths": 6563,
+      "NewCases": 9897,
+      "NewDeaths": 111
+    },
+    {
+      "date": "2020/07/08 12:00:00-07:00",
+      "state": "California",
+      "cases": 296304,
+      "deaths": 6708,
+      "NewCases": 8538,
+      "NewDeaths": 145
+    },
+    {
+      "date": "2020/07/09 12:00:00-07:00",
+      "state": "California",
+      "cases": 303516,
+      "deaths": 6825,
+      "NewCases": 7212,
+      "NewDeaths": 117
+    },
+    {
+      "date": "2020/07/10 12:00:00-07:00",
+      "state": "California",
+      "cases": 311505,
+      "deaths": 6936,
+      "NewCases": 7989,
+      "NewDeaths": 111
+    },
+    {
+      "date": "2020/07/11 12:00:00-07:00",
+      "state": "California",
+      "cases": 320030,
+      "deaths": 7012,
+      "NewCases": 8525,
+      "NewDeaths": 76
+    },
+    {
+      "date": "2020/07/12 12:00:00-07:00",
+      "state": "California",
+      "cases": 327676,
+      "deaths": 7042,
+      "NewCases": 7646,
+      "NewDeaths": 30
+    },
+    {
+      "date": "2020/07/13 12:00:00-07:00",
+      "state": "California",
+      "cases": 336104,
+      "deaths": 7085,
+      "NewCases": 8428,
+      "NewDeaths": 43
+    }
+   ]
