@@ -16,11 +16,12 @@
 
     <body>
         <div class="container-sm mt-1">
-            <nav class="navbar navbar-dark bg-dark">
-                <span class="navbar-brand mb-0 h1">Demo</span>
-                <p class="lead">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat.
-                </p>
+            <nav class="navbar navbar-dark bg-dark rounded">
+                <h1 class="navbar-brand mb-0 h1 col-12">Demo</h1>
+                <div class="lead">
+                    <hr/>
+                    A simple responsive knockout js example. Select, edit, cancel or save. 
+                </div>
             </nav>
             <div class="container-sm mt-4">
                 <div class="row">
@@ -38,15 +39,17 @@
                             </tbody>
                         </table>
                     </section>
-                    <section class="col-12 d-sm-none">
-                        <select data-bind="options: patients, value: selectedPatientDD, optionsText: 'fullName' , optionsCaption:'.:patients:.'">
+                    <section class="col-12 d-sm-none text-center">
+                        <select class="form-control" data-bind="options: patients, value: selectedPatientDD, optionsText: 'fullName' , optionsCaption:'.:patients:.'">
 
                         </select>
                         
                     </section>
 
-                    <section class="col-sm">
-
+                    <section class="col-sm mt-1">
+                        <div data-bind="visible: selectedPatient() == null">
+                            Make a selection
+                        </div>
                         <div data-bind="with: selectedPatient">
                             <form>
                                 <h5>Currently Viewing</h5>
@@ -75,7 +78,6 @@
 
                             </form>
                         </div>
-
                     </section>
                 </div>
             </div>
@@ -83,45 +85,8 @@
         </div>
     </body>
 
+    <script type="text/javascript" src="patient.js"></script>
     <script type="text/javascript">
-
-        var Patient = function(item){
-            var self = this;
-            self.id = item.id;
-            self.editing = ko.observable(false);
-            self.backupCopy = item;
-
-            self.firstName = ko.observable();
-            self.lastName = ko.observable();
-            self.city = ko.observable();
-            self.eyewear = ko.observableArray();
-
-            self.initialize = function(item){
-                self.firstName(item.first_name);
-                self.lastName(item.last_name);
-                self.city(item.city);
-                self.eyewear.removeAll();
-                $.map(item.eyewear, function(eyes){
-                    self.eyewear.push(eyes.Product);
-                });
-            }
-            self.initialize(item);
-
-            self.cancel = function(){
-                self.initialize(self.backupCopy);
-                self.editing(false);
-            }
-            self.save = function(){
-                self.backupCopy.firstName = self.firstName();
-                self.backupCopy.lastName = self.lastName();
-                self.backupCopy.city = self.city();
-                self.editing(false);
-            }
-
-            self.fullName = ko.computed(function(){
-                return self.firstName() +" "+ self.lastName();
-            });
-        }
 
         // basic model object
         var ViewModel = function(){
@@ -149,6 +114,7 @@
             }
             self.save = function(){
                 self.idle(false);
+                // Adding a little delay just for effect
                 setTimeout(function(){
                     if( self.selectedPatient() != null ){
                     self.selectedPatient().save();
@@ -182,8 +148,6 @@
                         self.patients(data);
                 });
             }
-
-            
             self.getData();
         }
 
