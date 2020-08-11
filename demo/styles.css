@@ -7,12 +7,13 @@ body {
     -moz-osx-font-smoothing: grayscale;
   }
   
-  div.jumbotron {
-    background-image: linear-gradient(to right, blue, navy);
+  nav.navbar {
+    background-image: linear-gradient(to right, #2396de, navy);
   }
-  div.jumbotron.header {
+  nav.navbar {
     color:white;
   }
+  
   td.selected {
     font-weight: bold;
   }
