@@ -8,3 +8,4 @@
 
 [KnockoutJS Dynamic Grid from Text](https://geekydevjoe.github.io/frameworks/dynamic.html)
 
+[KnockoutJS Demo Select &amp; Edit](https://geekydevjoe.github.io/demo/index.html)

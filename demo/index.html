@@ -46,9 +46,12 @@
                         
                     </section>
 
-                    <section class="col-sm mt-1">
+                    <section class="col-sm mt-3">
                         <div data-bind="visible: selectedPatient() == null">
-                            Make a selection
+                            <div class="alert alert-warning">
+                                <h4>select a patient to edit</h4>
+                            
+                            </div>
                         </div>
                         <div data-bind="with: selectedPatient">
                             <form>
@@ -108,8 +111,9 @@
             self.cancel = function(){
                 if( self.selectedPatient() != null ){
                     self.selectedPatient().cancel();
-                    self.selectedPatient(null);
                     self.selectedPatientDD(null);
+                    self.selectedPatient(null);
+                    
                 }
             }
             self.save = function(){
@@ -119,8 +123,8 @@
                     if( self.selectedPatient() != null ){
                     self.selectedPatient().save();
                     self.selectedPatient().editing(false);
-                    self.selectedPatient(null);
                     self.selectedPatientDD(null);
+                    self.selectedPatient(null);
                     }
                     self.idle(true);
                 }, 500+(Math.random()%500));
