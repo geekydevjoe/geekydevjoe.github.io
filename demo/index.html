@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js" type="text/javascript"></script>
+
+        <!-- CSS only -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="styles.css">
+        <!-- JS, Popper.js, and jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    </head>
+
+    <body>
+        <div class="container-sm mt-1">
+            <div class="jumbotron header">
+                <div class="container">
+                    <h1>Demo</h1>
+                    <p class="lead">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat.
+                    </p>
+                </div> 
+            </div>
+
+            <div class="container-sm">
+                <div class="row">
+                    
+                    <section class="col-3">
+                        <table class="table table-striped patients">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Patients</th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: patients">
+                                <tr>
+                                    <td data-bind="click: $parent.selectPatient, css: { selected: editing() }"><span data-bind="text: fullName"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <section class="col-sm">
+                       
+                        <div data-bind="with: selectedPatient">
+                            <form>
+                                <h5>Currently Viewing</h5>
+                                <div class="form-group" >
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" data-bind="value: firstName"/>
+                                </div>
+                                <div class="form-group" >
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" data-bind="value: lastName"/>
+                                </div>
+                                <div class="form-group" >
+                                    <label for="city">City</label>
+                                    <input type="text" class="form-control" id="city" data-bind="value: city"/>
+                                </div>
+                                <div class="form-group">
+                                    <div data-bind="visible: eyewear().length>0">
+                                    <label>Eyewear</label>
+                                        <ul data-bind="foreach: eyewear">
+                                            <li data-bind="text: $data"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <button class="btn btn-danger" data-bind="click: $parent.cancel, enable: $parent.idle">Cancel</button>
+                                <button class="btn btn-primary" data-bind="click: $parent.save, enable: $parent.idle">Save</button>
+                            
+                            </form>
+                        </div>
+                        
+                    </section>
+                </div>
+            </div>
+
+        </div>
+    </body>
+
+    <script type="text/javascript">
+
+        var Patient = function(item){
+            var self = this;
+            self.id = item.id;
+            self.editing = ko.observable(false);
+            self.backupCopy = item;
+
+            self.firstName = ko.observable();
+            self.lastName = ko.observable();
+            self.city = ko.observable();
+            self.eyewear = ko.observableArray();
+
+            self.initialize = function(item){
+                self.firstName(item.first_name);
+                self.lastName(item.last_name);
+                self.city(item.city);
+                self.eyewear.removeAll();
+                $.map(item.eyewear, function(eyes){
+                    self.eyewear.push(eyes.Product);
+                });
+                
+            }
+            self.initialize(item);
+
+            self.cancel = function(){
+                self.initialize(self.backupCopy);
+                self.editing(false);
+            }
+            self.save = function(){
+                self.backupCopy.firstName = self.firstName();
+                self.backupCopy.lastName = self.lastName();
+                self.backupCopy.city = self.city();
+                self.editing(false);
+                
+            }
+            
+            self.fullName = ko.computed(function(){
+                return self.firstName() +" "+ self.lastName();
+            });
+            
+        }
+
+        // basic model object
+        var ViewModel = function(){
+            var self = this;
+            self.patients = ko.observableArray();
+            self.selectedPatient = ko.observable();
+            self.selectedId = ko.observable(null);
+            self.idle = ko.observable(true);
+            self.selectPatient = function(item){
+
+                if( self.selectedPatient() != null){
+                    self.selectedPatient().cancel();
+                }
+                self.selectedPatient(item);
+                self.selectedPatient().editing(true);
+            }
+            self.cancel = function(){
+                if( self.selectedPatient() != null ){
+                    self.selectedPatient().cancel();
+                    self.selectedPatient(null);
+                }
+            }
+            self.save = function(){
+                self.idle(false);
+                setTimeout(function(){
+                    if( self.selectedPatient() != null ){
+                    self.selectedPatient().save();
+                    self.selectedPatient().editing(false);
+                    self.selectedPatient(null);
+                    }
+                    self.idle(true);
+                }, 500+(Math.random()%500));
+                
+            }
+            self.getData = function(){
+                // read the json file
+                // load our sample data
+                fetch("patients.json")
+                    .then(response => response.json())
+                    .then(result => {
+                        var data = new Array();
+                        result.map(result => {
+                            data.push(new Patient(result));
+                        });
+                        self.patients(data);
+                });
+            }
+            self.getData();
+        }
+
+        var vm = new ViewModel();
+        ko.applyBindings(vm);
+    </script>
+</html>
