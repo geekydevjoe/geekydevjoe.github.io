@@ -3,13 +3,15 @@
      "invoice_id" : 1000,
       "vendor": "Acuvue",
       "bill_date": "08/11/2020",
-      "total": "$450"
+      "total": "$450",
+      "quantity": 650
     },
     {
       "invoice_id" : 1001,
        "vendor": "Widget Co",
        "bill_date": "08/01/2020",
-       "total": "$872"
+       "total": "$872",
+       "quantity": 125
      }
 
 ]

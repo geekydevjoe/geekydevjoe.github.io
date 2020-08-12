@@ -17,23 +17,32 @@
     <body>
         <div class="container-sm mt-1">
             <nav class="navbar navbar-dark bg-dark rounded">
-                <h1 class="navbar-brand mb-0 h1 col-12">Demo</h1>
+                <h1 class="navbar-brand mb-0 h1 col-12">Demo - templates</h1>
                 <div class="lead">
                     <hr/>
-                    
+                    Each of the "cards" that have a cancel and action button are using a temple that is bound to an object that has all of the information it needs.
+                    <hr/>
+                    The 2 grids are also using a template to generate the grid from data that is unknown to the template. A column that indicates actionable will get a drop-down populate with values also supplied to the template
                 </div>
             </nav>
             <div class="container-sm mt-4">
                 
                 <!-- Still need cards  -->
+                <div class="row">
+                    <!-- ko foreach: cards -->
+                    <div class="col-sm-4">
+                        <div data-bind="template: { name: 'card-template', data: $data }"></div>
+                    </div>
+                    <!-- /ko -->
+                </div>
 
-                <div class="mt-1">
+                <div class="mt-5">
                     <ul class="nav nav-pills">
                         <li class="nav-item">
-                        <a class="nav-link active" data-bind="click: function(){ selectTab(1); }" href="#">Patients</a>
+                        <a class="nav-link" data-bind="click: function(){ selectTab(1); }, css:{ active : tabIndex() == 1 }" href="#">Patients</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" data-bind="click: function(){ selectTab(2); }" href="#">Invoices</a>
+                        <a class="nav-link" data-bind="click: function(){ selectTab(2); }, css:{ active : tabIndex() == 2 }" href="#">Invoices</a>
                         </li>        
                     </ul>
                 </div>
@@ -46,6 +55,25 @@
             </div>
         </div>
 
+
+        <!-- Simple Note Card to keep a consistent look -->
+        <script type="text/html" id="card-template">
+            <div class="noteCard">
+                <form>
+                    <div class="form-group">
+                        <h5 data-bind="text: headline"></h5>
+                    </div>
+                    <div class="form-group">
+                        <label data-bind="text: subHeadlineLabel"></label>
+                        <em><span class="text-right" data-bind="text: subHeadline"></label></em>
+                    </div>
+                    <div class="form-group text-right">
+                        <button data-bind="click: cancel" class="btn btn-light btn-sm">Cancel</button>
+                        <button data-bind="click: action, text: actionText" class="btn btn-sm btn-primary"></button>
+                    </div>
+                </form>
+            </div>
+        </script>
 
         <!-- Simple Grid Template to keep a consistent look and feel with dynamic dataset -->
         <script type="text/html" id="grid-template">
@@ -60,6 +88,7 @@
                         <!-- ko if: $data.action -->
                         <td>
                             <select data-bind="options: $parents[1].options, value: $parent[$data.column]"></select>
+                            <span data-bind="text: $parent[$data.column]"></span>
                         </td>
                         <!-- /ko -->
                         <!-- ko if: !$data.action -->
@@ -80,6 +109,20 @@
             self.data = options ? options.data : [];
             self.columns = options ? options.columns : [];
             self.options = options ? options.options : null;
+
+            self.actionOptionChanged = function(item){
+            }
+        }
+
+        var NoteCardTemplate = function(options){
+            var self = this;
+            self.actionText = options.actionText;
+            self.headline = options.headline;
+            self.headlineLabel = options.headlineLabel;
+            self.subHeadlineLabel = options.subHeadlineLabel;
+            self.subHeadline = options.subHeadline;
+            self.action = options.onAction;
+            self.cancel = function(){ }
         }
 
         // basic model object
@@ -87,13 +130,28 @@
             var self = this;
             self.invoicesGrid = ko.observable(new GridTemplate({}));
             self.patientsGrid = ko.observable(new GridTemplate({}));
-            self.idle = ko.observable(true);
-            self.tabIndex = ko.observable(1);
 
+            // for the grid selection
+            self.tabIndex = ko.observable(1);
             self.selectTab = function(tabId){
                 self.tabIndex(tabId);
             }
 
+            self.cards = ko.observableArray();
+
+            // setup 2 cards
+            self.cards.push(new NoteCardTemplate({ actionText:"Pay"
+                                                , headline: "Card 1"
+                                                , subHeadline: "$5000"
+                                                , subHeadlineLabel:"Supplies total"
+                                                , onAction : function(){ alert("Clicked Pay"); }}));
+            self.cards.push(new NoteCardTemplate({ actionText:"Request"
+                                                 , headline: "Widgets"
+                                                 , subHeadline: "15"
+                                                 , subHeadlineLabel:"Quantity"
+                                                 , onAction : function(){ alert("Clicked Request"); }}));
+
+            
             self.getData = function(){
                 // read the json file
                 // load our sample data
@@ -103,7 +161,9 @@
                         self.patientsGrid(new GridTemplate({data: result, 
                             columns: [{title:"First Name", column: "first_name"}, 
                                     {title: "Last Name", column:"last_name"},
-                                    {title: "City", column:"city", action: true}], 
+                                    {title: "City", column:"city", action: true},
+                                    {title: "Zip Code", column: "zip" },
+                                    {title: "Eyewear", column:"eyewear_oneline"}], 
                             options: ["Rocklin","Roseville","Any Town","Another Town","Smallville"]}));
                 });
 
@@ -113,6 +173,7 @@
                         self.invoicesGrid(new GridTemplate({data: result, 
                             columns: [{title:"Invoice ID", column: "invoice_id"}, 
                                     {title: "Vendor", column:"vendor"},
+                                    {title: "Quantity", column:"quantity" },
                                     {title: "Total", column:"total"},
                                     {title: "Billed", column:"bill_date"}]}));
                 });

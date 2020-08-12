@@ -5,7 +5,9 @@
       "last_name": "Doe",
       "city": "Any Town",
       "eyewear": [{"Product":"Acuvue 2 Contacts"}, {"Product":"Monicle"}],
-      "last_updated": "2020/03/17 12:00:00-07:00"
+      "eyewear_oneline": "Acuvue 2 Contacts, Monicle",
+      "last_updated": "2020/03/17 12:00:00-07:00",
+      "zip":"12345"
     },
     {
         "id" : 2,
@@ -13,7 +15,9 @@
         "last_name": "Doe",
         "city": "Another Town",
         "eyewear": [{"Product":"Reading Glasses"},{ "Product": "Prescription Sunglasses"}],
-        "last_updated": "2020/05/12 12:00:00-07:00"
+      "eyewear_oneline": "Reading Glasses, Prescription Sunglasses",
+      "last_updated": "2020/05/12 12:00:00-07:00",
+        "zip":"45123"
       },
       {
         "id" : 3,
@@ -21,7 +25,9 @@
         "last_name": "Noname",
         "city": "Smallville",
         "eyewear": [],
-        "last_updated": "2020/06/05 15:00:00-07:00"
+        "eyewear_oneline": "None",
+        "last_updated": "2020/06/05 15:00:00-07:00",
+        "zip":"54521"
       }
 
 ]
