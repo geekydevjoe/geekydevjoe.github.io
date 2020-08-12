@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js" type="text/javascript"></script>
+
+        <!-- CSS only -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="styles.css">
+        <!-- JS, Popper.js, and jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    </head>
+
+    <body>
+        <div class="container-sm mt-1">
+            <nav class="navbar navbar-dark bg-dark rounded">
+                <h1 class="navbar-brand mb-0 h1 col-12">Demo</h1>
+                <div class="lead">
+                    <hr/>
+                    
+                </div>
+            </nav>
+            <div class="container-sm mt-4">
+                
+                <!-- Still need cards  -->
+
+                <div class="mt-1">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                        <a class="nav-link active" data-bind="click: function(){ selectTab(1); }" href="#">Patients</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" data-bind="click: function(){ selectTab(2); }" href="#">Invoices</a>
+                        </li>        
+                    </ul>
+                </div>
+                <div class="row mt-1">                    
+                    <div data-bind="visible: tabIndex() == 1, template: { name: 'grid-template', data: patientsGrid }">
+                    </div>
+                    <div data-bind="visible: tabIndex() == 2, template: { name: 'grid-template', data: invoicesGrid }">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Simple Grid Template to keep a consistent look and feel with dynamic dataset -->
+        <script type="text/html" id="grid-template">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr data-bind="foreach: columns">
+                        <th data-bind="text: $data.title"></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: data">
+                    <tr data-bind="foreach: $parent.columns">
+                        <!-- ko if: $data.action -->
+                        <td>
+                            <select data-bind="options: $parents[1].options, value: $parent[$data.column]"></select>
+                        </td>
+                        <!-- /ko -->
+                        <!-- ko if: !$data.action -->
+                        <td data-bind="text: $parent[$data.column]"></td>
+                        <!-- /ko -->
+                    </tr>
+                </tbody>
+            </table>
+        </script>
+    
+    </body>
+
+    <script type="text/javascript">
+
+        // Grid Template view model to work with the grid-template
+        var GridTemplate = function(options){
+            var self = this;
+            self.data = options ? options.data : [];
+            self.columns = options ? options.columns : [];
+            self.options = options ? options.options : null;
+        }
+
+        // basic model object
+        var ViewModel = function(){
+            var self = this;
+            self.invoicesGrid = ko.observable(new GridTemplate({}));
+            self.patientsGrid = ko.observable(new GridTemplate({}));
+            self.idle = ko.observable(true);
+            self.tabIndex = ko.observable(1);
+
+            self.selectTab = function(tabId){
+                self.tabIndex(tabId);
+            }
+
+            self.getData = function(){
+                // read the json file
+                // load our sample data
+                fetch("patients.json")
+                    .then(response => response.json())
+                    .then(result => {
+                        self.patientsGrid(new GridTemplate({data: result, 
+                            columns: [{title:"First Name", column: "first_name"}, 
+                                    {title: "Last Name", column:"last_name"},
+                                    {title: "City", column:"city", action: true}], 
+                            options: ["Rocklin","Roseville","Any Town","Another Town","Smallville"]}));
+                });
+
+                fetch("bills.json")
+                    .then(response => response.json())
+                    .then(result => {
+                        self.invoicesGrid(new GridTemplate({data: result, 
+                            columns: [{title:"Invoice ID", column: "invoice_id"}, 
+                                    {title: "Vendor", column:"vendor"},
+                                    {title: "Total", column:"total"},
+                                    {title: "Billed", column:"bill_date"}]}));
+                });
+            }
+            self.getData();
+        }
+
+        var vm = new ViewModel();
+        ko.applyBindings(vm);
+    </script>
+</html>

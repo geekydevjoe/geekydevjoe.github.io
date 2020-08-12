@@ -1,0 +1,15 @@
+[
+    {
+     "invoice_id" : 1000,
+      "vendor": "Acuvue",
+      "bill_date": "08/11/2020",
+      "total": "$450"
+    },
+    {
+      "invoice_id" : 1001,
+       "vendor": "Widget Co",
+       "bill_date": "08/01/2020",
+       "total": "$872"
+     }
+
+]
