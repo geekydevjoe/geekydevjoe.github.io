@@ -1,4 +1,5 @@
-# Samples
+
+## Just a few examples using React and KnockoutJS for UI
 
 [ReactJS sample scorecard](https://geekydevjoe.github.io/scorecard/)
 
