@@ -10,4 +10,4 @@
 
 [KnockoutJS Demo Select &amp; Edit](https://geekydevjoe.github.io/demo/index.html)
 
-[KnockoutJS Demo Select &amp; Edit](https://geekydevjoe.github.io/demo/templates.html)
+[KnockoutJS Demo Templates](https://geekydevjoe.github.io/demo/templates.html)
