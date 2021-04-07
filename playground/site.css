@@ -1,0 +1,54 @@
+@media (prefers-color-scheme: dark) {
+    :root {
+        --main-color: white;
+        --main-background: black;
+    }
+}
+@media (prefers-color-scheme: light) {
+    :root {
+        --main-color: black;
+        --main-background: silver;
+    }
+}
+
+/* :root {
+    --main-color: white;
+    --main-background: black;
+} */
+
+body {
+    font-size: 14px;
+    background-color: var(--main-background);
+    color: var(--main-color);
+}
+@media (min-width: 900px){
+    .smallOnly {
+        display:none;
+    }
+}
+@media (max-width: 900px){
+
+    #example .hideSmall
+    {
+        display:none;
+    }
+}
+
+@media (min-width: 900px){
+    .filter_sidebar {
+        background-color: #696969;
+    }
+}
+
+@media (max-width: 900px){
+    .filter_sidebar
+    {
+        position: fixed;
+        top: 0;
+        left:0;
+        z-index: 19999;
+        height: 100%;
+        width: 200px;
+        background-color: #696969;
+    }
+}
