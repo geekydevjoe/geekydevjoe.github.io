@@ -11,10 +11,10 @@
     }
 }
 
-/* :root {
-    --main-color: white;
-    --main-background: black;
-} */
+:root {
+    --main-color: black;
+    --main-background: white;
+}
 
 body {
     font-size: 14px;
@@ -36,11 +36,15 @@ body {
 
 @media (min-width: 900px){
     .filter_sidebar {
-        background-color: #696969;
+        background-color: orange;
     }
 }
 
+
 @media (max-width: 900px){
+    #app {
+        left: 200px;
+    }
     .filter_sidebar
     {
         position: fixed;
@@ -48,7 +52,7 @@ body {
         left:0;
         z-index: 19999;
         height: 100%;
-        width: 200px;
+        width: 150px;
         background-color: #696969;
     }
 }
