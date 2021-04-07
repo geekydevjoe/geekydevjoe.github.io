@@ -41,7 +41,7 @@ body {
 }
 
 
-@media (max-width: 900px){
+/* @media (max-width: 900px){
     #app {
         left: 200px;
     }
@@ -55,4 +55,4 @@ body {
         width: 150px;
         background-color: #696969;
     }
-}
+} */
