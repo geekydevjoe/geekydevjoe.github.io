@@ -21,7 +21,7 @@ body {
     background-color: var(--main-background);
     color: var(--main-color);
 }
-@media (min-width: 900px){
+/* @media (min-width: 900px){
     .smallOnly {
         display:none;
     }
@@ -38,7 +38,7 @@ body {
     .filter_sidebar {
         background-color: orange;
     }
-}
+} */
 
 
 /* @media (max-width: 900px){
