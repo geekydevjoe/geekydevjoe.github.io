@@ -34,6 +34,12 @@
             </tbody>
         </table>
         </div>
+        <div>
+            <input data-bind="textInput: example">
+            <div data-bind="text: example">
+
+            </div>
+        </div>
     </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js" type="text/javascript"></script>
@@ -68,6 +74,11 @@
                 self.columns.push(variable);
             }
         }
+        self.example = ko.observable("hi").extend({ rateLimit: 500 });
+
+        self.example.subscribe(function(newValue){
+            console.log("value changed");
+        });
 
         self.formatted = ko.computed(function(){
             var txt = self.textArea();
