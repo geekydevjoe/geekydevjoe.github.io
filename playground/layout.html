@@ -1,0 +1,64 @@
+<html>
+    <style>
+        #page {
+  display: grid;
+  width: 100%;
+  min-height: 600px;
+  grid-template: [header-left] "head head" 60px [header-right]
+                 [main-left]   "nav  main" 1fr  [main-right]
+                 [footer-left] "nav  foot" 30px [footer-right]
+                 / 140px 1fr;
+}
+@media (min-width: 1800px ){
+    #page {
+  grid-template: [header-left] "head head" 30px [header-right]
+                 [main-left]   "nav  main" 1fr  [main-right]
+                 [footer-left] "nav  foot" 30px [footer-right]
+                 / 120px 1fr;
+}   
+}
+
+header {
+  background-color: lime;
+  grid-area: head;
+}
+
+nav {
+  background-color: lightblue;
+  grid-area: nav;
+}
+
+main {
+  background-color: yellow;
+  grid-area: main;
+}
+
+footer {
+  background-color: red;
+  grid-area: foot;
+}
+body {
+    display: flex;
+    justify-content: space-around;
+}
+.site {
+    display:flex;
+    
+    max-width: 800px;
+    justify-content:space-around;
+    flex-shrink: 1;
+    flex-grow: 1;
+}
+    </style>
+    <body>
+        <div class="site">
+
+            <section id="page">
+                <header>Header</header>
+                <nav>Navigation</nav>
+                <main>Main area</main>
+                <footer>Footer</footer>
+              </section>
+        </div>
+    </body>
+</html>
