@@ -13,36 +13,66 @@
 </head>
 <style>
     @media (max-width: 1000px){
-    html[data-scroll="0"] .header {
-        position: fixed;
-        top: 0px;
-        left: 0px;
-        background-color: red;
-        width: 100%;
-        z-index: 9999;
-        height: 80px;
-        padding:16px;
-        margin:0px;
+        html[data-scroll="0"] .header {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            background-color: red;
+            width: 100%;
+            z-index: 9999;
+            height: 80px;
+            padding:16px;
+            margin:0px;
+        }
+        html[data-scroll="0"] .main {
+            margin-top: 60px;
+        }
     }
-    html[data-scroll="0"] .main {
-        margin-top: 60px;
+    #app {
+        display: flex;
+        flex-direction: column;
     }
+    header {
+        display: flex;
+        flex: 4 60px;
+        flex-direction: row;
+        border: solid 1px red;
+    }
+    nav {
+        display: flex;
+        flex: 1 60px;
+        border: solid 1px green;
+        justify-content: space-around;
+        align-items: center;
+    }
+    section.main {
+        justify-content: space-around;
+        align-items: center;
+        display: flex;
+        flex-direction:row;
+    }
+    section.main div:first-child {
+        align-self: flex-start;
+        flex: 1 60px
+    }
+    section.main div:not(:first-child) {
+        flex: 4 60px;
     }
 </style>
 <body>
-    <div class="main container-fluid">
-        <div class="header">
-            <h1>Playground</h1>
-        </div>
-           
-        <div id="app" class="row">  
-            <div class="col-12 mt-3">
-                App Name
-                <br/>
-                <button class="toggleFilter">filter</button> 
-            </div>
-            <div class="row mt-3 col-12">
-                <div class="col-4 ">
+    <div class="main">
+        <div id="app">  
+            <header class="header">
+                <h1>Playground</h1>
+            </header>           
+            <nav>
+                <div>App Name</div>
+                <div>
+                    <button class="toggleFilter">filter</button>
+                </div> 
+            </nav>
+            <section class="main">
+                <div class="">
                     <div class="filter_sidebar">
                         Sidebar
                         <div>
@@ -72,7 +102,7 @@
                         
                     </div>
                 </div>
-                <div class="col-7">
+                <div class="">
                     <table id="example"  class="table table-striped col-12">
                     </table>
                 </div>
