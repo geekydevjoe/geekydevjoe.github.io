@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,54 +8,78 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
     <title>Vue Test Area</title>
+    <!-- <link rel="stylesheet" href="resources/datatables.css">
+     -->
      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="site.css">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 </head>
+<style>
+    @media (max-width: 1000px){
+        html[data-scroll="0"] .header {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            background-color: red;
+            width: 100%;
+            z-index: 9999;
+            height: 80px;
+            padding:16px;
+            margin:0px;
+        }
+        html[data-scroll="0"] .main {
+            margin-top: 60px;
+        }
+    }
+    #app {
+        display: flex;
+        flex-direction: column;
+    }
+    header {
+        display: flex;
+        flex: 4 60px;
+        flex-direction: row;
+        border: solid 1px red;
+    }
+    nav {
+        display: flex;
+        flex: 1 60px;
+        border: solid 1px green;
+        justify-content: space-around;
+        align-items: center;
+    }
+    section.main {
+        justify-content: space-around;
+        align-items: center;
+        display: flex;
+        flex-direction:row;
+    }
+    section.main div:first-child {
+        align-self: flex-start;
+        flex: 1 60px
+    }
+    section.main div:not(:first-child) {
+        flex: 4 60px;
+    }
+</style>
 <body>
-    <div class="container-fluid">
-        <h1>Menu pinning</h1>
-        <div id="app" class="row">  
-            <div class="col-12 mt-3">
-                <ul>
-                    <li>Menu/filter options should be visible on the left when the screen size is more than 900px</li>
-                    <li>When less than that, detach and fix to the top left corner pinned so it doesn't move</li>
-                    <li>It also needs to be able to hide</li>
-                </ul>
-                <br/>
-                <button class="toggleFilter">filter</button> 
-            </div>
-            <div class="row mt-3 col-12">
-                <div class="col-4 ">
-                    <div class="filter_sidebar">
-                        Sidebar
-                        <div>
-                            <select data-bind="options: filterOptions" class="form-control"></select>
-                            <br/>
-                        </div>
-                        <div>
-                            <select data-bind="options: filterOptions" class="form-control"></select>
-                            <br/>
-                        </div>
-                        <div>
-                            <select data-bind="options: filterOptions" class="form-control"></select>
-                            <br/>
-                        </div>
-                        <div>
-                            <select data-bind="options: filterOptions" class="form-control"></select>
-                            <br/>
-                        </div>
-                        <div>
-                            <select data-bind="options: filterOptions" class="form-control"></select>
-                            <br/>
-                        </div>
-                        <div>
-                            <select data-bind="options: filterOptions" class="form-control"></select>
-                            <br/>
-                        </div>
-                        
-                    </div>
-                </div>
-                <div class="col-7">
+    <div class="main">
+        <div>
+            Stuff goes here
+            <input name="dates" style="width:200px;" />
+            <br/>
+            <label data-bind="text: startDate"></label>
+            <label data-bind="text: endDate"></label>
+        </div>
+        <button data-bind="click: test">test</button>
+        <div id="app">  
+            <section class="main">
+                <div class="">
                     <table id="example"  class="table table-striped col-12">
                     </table>
                 </div>
@@ -61,7 +87,6 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
     
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -71,20 +96,45 @@
     
     <script type="text/javascript">
         var data = [];
-
+        var vm;
         $(document).ready(function(){
 
-            fetch("data/random.json")
-                .then(json => json.json())
-                .then(d => { showData(d.data); });
-                                
-            ko.applyBindings(new ViewModel());
+            // fetch("data/random.json")
+            //     .then(json => json.json())
+            //     .then(d => { showData(d.data); });
+               
+            vm = new ViewModel({ start: "06/01/2021", end: "06/30/2021"});
+            ko.applyBindings(vm);
+
+            vm.initialize();
         });
 
-        var ViewModel = function(){
+        var ViewModel = function(data){
             var self = this;
+            self.startDate = ko.observable(data.start);
+            self.endDate = ko.observable(data.end);
 
             self.filterOptions = ko.observableArray(["------"]);
+            self.initialize = function() {
+                $('input[name="dates"]').daterangepicker({
+                    opens: 'left',
+                    startDate: self.startDate(), //moment().startOf('hour'),
+                    endDate: self.endDate(),//moment().startOf('hour').add(32, 'hour'),
+                    locale: {
+                        format: 'MM/DD/YYYY'
+                    }
+                }, function(start, end, label) {
+                    self.startDate(moment(start).format("MM/DD/YYYY"));
+                    self.endDate(moment(end).format("MM/DD/YYYY"));
+                    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                });
+            }
+
+            self.test = function(){
+                $('input[name="dates"]').daterangepicker({
+                    startDate: "01/01/2021"
+                })
+            }
         }
 
         function showData(jsonData){
