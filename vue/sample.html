@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js" type="text/javascript"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        
+        <!-- CSS only -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="styles.css">
+        <!-- JS, Popper.js, and jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    </head>
+
+    <body>
+        <div class="container-sm mt-1">
+            <div>
+                <a href="/">Home</a>
+            </div>
+            <nav class="navbar navbar-dark bg-dark rounded mt-2">
+                <h1 class="navbar-brand mb-0 h1 col-12">Demo</h1>
+                <div class="lead">
+                    <hr/>
+                    A simple responsive knockout js example. Select, edit, cancel or save. 
+                </div>
+            </nav>
+            <div class="container-sm mt-4">
+                <div class="row">
+                    <section class="col-sm-3 d-none d-sm-block">
+                        <table class="table table-striped patients">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Patients</th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: patients">
+                                <tr>
+                                    <td data-bind="click: $parent.selectPatient, css: { selected: editing() }"><span data-bind="text: fullName"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                    <section class="col-12 d-sm-none text-center">
+                        <select class="form-control" data-bind="options: patients, value: selectedPatientDD, optionsText: 'fullName' , optionsCaption:'.:patients:.'">
+
+                        </select>
+                        
+                    </section>
+
+                    <section class="col-sm mt-3">
+                        <div data-bind="visible: selectedPatient() == null">
+                            <div class="alert alert-warning">
+                                <h4>select a patient to edit</h4>
+                            
+                            </div>
+                        </div>
+                        <div data-bind="with: selectedPatient">
+                            <form>
+                                <h5>Currently Viewing</h5>
+                                <div class="form-group" >
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" data-bind="value: firstName"/>
+                                </div>
+                                <div class="form-group" >
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" data-bind="value: lastName"/>
+                                </div>
+                                <div class="form-group" >
+                                    <label for="city">City</label>
+                                    <input type="text" class="form-control" id="city" data-bind="value: city"/>
+                                </div>
+                                <div class="form-group">
+                                    <div data-bind="visible: eyewear().length>0">
+                                    <label>Eyewear</label>
+                                        <ul data-bind="foreach: eyewear">
+                                            <li data-bind="text: $data"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <button class="btn btn-danger" data-bind="click: $parent.cancel, enable: $parent.idle">Cancel</button>
+                                <button class="btn btn-primary" data-bind="click: $parent.save, enable: $parent.idle">Save</button>
+
+                            </form>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+        </div>
+    </body>
+
+    <script type="text/javascript" src="patient.js"></script>
+    <script type="text/javascript">
+
+        // basic model object
+        var ViewModel = function(){
+            var self = this;
+            self.patients = ko.observableArray();
+            self.selectedPatient = ko.observable();
+            self.selectedPatientDD = ko.observable();
+            self.selectedId = ko.observable(null);
+            self.idle = ko.observable(true);
+            self.selectPatient = function(item){
+
+                if( self.selectedPatient() != null){
+                    self.selectedPatient().cancel();
+                }
+                self.selectedPatient(item);
+                self.selectedPatientDD(item);
+                self.selectedPatient().editing(true);
+            }
+            self.cancel = function(){
+                if( self.selectedPatient() != null ){
+                    self.selectedPatient().cancel();
+                    self.selectedPatientDD(null);
+                    self.selectedPatient(null);
+                    
+                }
+            }
+            self.save = function(){
+                self.idle(false);
+                // Adding a little delay just for effect
+                setTimeout(function(){
+                    if( self.selectedPatient() != null ){
+                    self.selectedPatient().save();
+                    self.selectedPatient().editing(false);
+                    self.selectedPatientDD(null);
+                    self.selectedPatient(null);
+                    }
+                    self.idle(true);
+                }, 500+(Math.random()%500));
+            }
+
+            self.dropDownChanged = ko.computed(function(){
+
+                var sel = self.selectedPatientDD();
+                if( sel != null && self.selectedPatient() != sel){
+                    self.selectedPatient(sel);
+                }
+
+            });
+
+            self.getData = function(){
+                // read the json file
+                // load our sample data
+                fetch("patients.json")
+                    .then(response => response.json())
+                    .then(result => {
+                        var data = new Array();
+                        result.map(result => {
+                            data.push(new Patient(result));
+                        });
+                        self.patients(data);
+                });
+            }
+            self.getData();
+        }
+
+        var vm = new ViewModel();
+        ko.applyBindings(vm);
+    </script>
+</html>
