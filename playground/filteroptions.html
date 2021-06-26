@@ -20,13 +20,44 @@
             padding: 32px;
             grid-template-columns: 1fr;   
         }
+        .filterOption {
+            min-width: 150px;
+            border: solid 1px gray;
+        }
+        .filterOption .filterTitle {
+            display: grid;
+            grid-template-columns: 1fr 0.2fr;
+            gap: 16px;
+            background-color: silver;
+        }
+        .filterOption .filterOptionList {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            padding: 8px;
+        }
     </style>
 </head>
 <body>
     <div class="main" id="app">
         <div class="links">
            
-            
+            <filter-options title="Frame Colors" :options="filter1_options">
+            </filter-options>
+            <filter-options title="Frame Materials" :options="filter2_options">
+            </filter-options>
+            <div>
+                Selected Colors
+                <ul v-for="item in filter1_options.selected">
+                    <li>{{ item }}</li>
+                </ul>
+            </div>
+            <div>
+                Selected Materials
+                <ul v-for="item in filter2_options.selected">
+                    <li>{{ item }}</li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -35,18 +66,118 @@
     <script src="https://unpkg.com/vue@next"></script>
 
     <script type="text/javascript">
+/*
+Filter Options component needs
+pass in array of options
+*/
+
+        class FilterOptionsType
+        {
+            constructor(items, selected){
+                this.items = items;
+                this.selected = selected;
+            }
+            clear(){
+                this.items = [];
+                this.selected = [];
+            }
+        }
+        const FilterOptions = {
+            props: {
+                title : {
+                    required: true,
+                    type: String,
+                    default: ""
+                },
+                options: {
+                    type: FilterOptionsType,
+                    required: true
+                }
+            },
+            template: `
+                <div class="filterOption">
+                    <div class="filterTitle" v-on:click="toggleShowOptions()">
+                        <div>{{ title }}</div>
+                        <div>+</div>
+                    </div>
+                    <div class="filterOptionList" v-if="showOptions">
+                        <div v-for="item in options.items">
+                            <label><input type="checkbox" v-model="options.selected" :value="item.value" /> {{ item.title }}</label>
+                        </div>
+                    </div>
+                    <div>
+                        Selected {{ this.options.selected }}
+                    </div>
+                </div>
+            `,
+            data() {
+                return {
+                    showOptions: {
+                        required: false,
+                        type: Boolean,
+                        default: false
+                    },
+                    selectedOptions: this.selected
+                }
+            },
+            methods: {
+                toggleShowOptions(){
+                    console.log("toggleShowOptions");
+                    this.showOptions = !this.showOptions;
+                }
+            }
+        }
 
         const App = {
             data(){
                 return {
-                    links:[
-                    ]
+                    links:[],
+                    filter1: "Joe mama",
+                    filter1_options: {
+                        type: FilterOptionsType
+                    },
+                    filter2_options: {
+                        type: FilterOptionsType
+                    }
                 }
             },
             components: {
+                "filter-options": FilterOptions
             },
             methods: {
 
+            },
+            watch: {
+                "filter1_options.selected" : function(newVal, oldVal){
+                    console.log(`Filter1 New value: ${newVal} Old Value: ${oldVal}`);
+                    // clear out the second filter
+                    this.filter2_options.items = [];
+                    // if (this.filter2_options != undefined){
+                    //     this.filter2_options.items.pop();
+                    // }
+                    var self = this;
+                    setTimeout(function(){
+
+                        self.filter2_options.items = [{title:"Metal", value: 10 }, {title: "Plastic", value: 20 }, {title: "Other", value: 30}];
+
+                    }, 2000);
+                    
+                },
+                "filter2_options.selected" : function(newVal, oldVal){
+                    console.log(`Filter2 New value: ${newVal} Old Value: ${oldVal}`);
+                }
+            },
+            mounted() {
+                console.log("mounted");
+                var self = this;
+                setTimeout(function(){
+                    self.filter1 = "I'm late";
+                    console.log(self.filter1);
+                    self.filter1_options = new FilterOptionsType([{title:"Red", value: 1 }, {title: "Green", value: 2 }], [1]);
+                    
+                    self.filter2_options = new FilterOptionsType([{title:"Metal", value: 10 }, {title: "Plastic", value: 20 }], [10,20]);
+                    
+                }, 1000)
             }
         }
         const app = Vue.createApp(App);
