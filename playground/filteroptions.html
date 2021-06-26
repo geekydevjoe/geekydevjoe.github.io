@@ -25,10 +25,7 @@
 <body>
     <div class="main" id="app">
         <div class="links">
-            <h3>Links</h3>
-            <template v-for="link in links">
-                <div><a :href="link.url">{{ link.text }}</a></div>
-            </template>
+           
             
         </div>
     </div>
@@ -43,13 +40,6 @@
             data(){
                 return {
                     links:[
-                        {url:"gridlayout.html", text: "Grid Layout"}
-                        ,{url:"layout.html", text: "Layout"}
-                        ,{url:"gridlayoutwithTable.html", text: "Grid Layout with Table"}
-                        ,{url:"daterange.html", text: "Date Range"}
-                        ,{url:"bootstrapdialog.html", text: "Bootstrap Dialog"}
-                        ,{url:"menu.html", text: "Menu"}
-                        ,{url:"filteroptions.html", text: "Filter Options"}
                     ]
                 }
             },
