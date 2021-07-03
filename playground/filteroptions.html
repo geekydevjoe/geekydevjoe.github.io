@@ -109,13 +109,13 @@ pass in array of options
             },
             template: `
                 <div class="filterOption">
-                    <div class="filterTitle" v-on:click="toggleShowOptions()">
+                    <div class="filterTitle" role="filter" v-on:click="toggleShowOptions()">
                         <div>{{ title }}</div>
-                        <div>{{ this.showOptions ? "-" : "+" }}</div>
+                        <div aria-label="">{{ this.showOptions ? "-" : "+" }}</div>
                     </div>
                     <div class="filterOptionList" v-if="showOptions">
                         <div v-for="item in options.items">
-                            <label><input type="checkbox" v-model="options.selected" :value="item.value" /> {{ item.title }}</label>
+                            <label role="option"><input type="checkbox" role="checkbox" aria-checked="false" v-model="options.selected" :value="item.value" /> {{ item.title }}</label>
                         </div>
                     </div>
                     
