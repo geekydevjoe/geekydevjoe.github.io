@@ -98,11 +98,10 @@
             <div class="filterGroups" v-bind:class="{ hide: !showingFilters }">
             
                 <filter-options title="Frame Colors" :options="filter1_options"></filter-options>
-                <!-- <filter-options title="Frame Materials" :options="filter2_options"></filter-options>
-                <filter-options title="Brands" :options="filter3_options"></filter-options> -->
+                <filter-options title="Frame Materials" :options="filter2_options"></filter-options>
+                <filter-options title="Brands" :options="filter3_options"></filter-options>
 
-                <button class="filter" v-on:click="showFilters">Done</button>
-                
+                <button class="filter" v-on:click="showFilters">Apply</button>
             </div>
 
             <div>
