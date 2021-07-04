@@ -43,34 +43,90 @@
             border-radius: 8px;
             background-color: #e8e8e8;    
         }
+
+        @media(max-width:600px)
+        {
+            .filterGroups {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                height: 100%;
+                animation: appear 0.5s;
+        |   }
+            .filterGroups.hide {
+                animation: disapear 0.5s;
+                animation-fill-mode:forwards;
+            }
+            @keyframes appear {
+               0%{
+                   transform: translateX(-100%);
+               }
+                
+                100% {
+                    transform: translateX(0%); 
+                }    
+            }
+            @keyframes disapear {
+                0% {
+                    transform: translateX(0%);
+                }
+                100% {
+                    transform: translateX(-100%); 
+                }    
+            }
+
+            button.filter {
+                display: block;
+            }
+        }
+        @media(min-width: 600px){
+            button.filter {
+                display: none;
+            }
+            .layout {
+                display: grid;
+                gap: 16px;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="main" id="app">
-        <div class="">
-           <div class="filterGroups">
-            <filter-options title="Frame Colors" :options="filter1_options"></filter-options>
-            <filter-options title="Frame Materials" :options="filter2_options"></filter-options>
-            <filter-options title="Brands" :options="filter3_options"></filter-options>
-        </div>
-            <div>
-                Selected Colors
-                <ul v-for="item in filter1_options.selected">
-                    <li>{{ item }}</li>
-                </ul>
+        <div class="layout">
+            
+            <div class="filterGroups" v-bind:class="{ hide: !showingFilters }">
+            
+                <filter-options title="Frame Colors" :options="filter1_options"></filter-options>
+                <!-- <filter-options title="Frame Materials" :options="filter2_options"></filter-options>
+                <filter-options title="Brands" :options="filter3_options"></filter-options> -->
+
+                <button class="filter" v-on:click="showFilters">Done</button>
+                
             </div>
+
             <div>
-                Selected Materials
-                <ul v-for="item in filter2_options.selected">
-                    <li>{{ item }}</li>
-                </ul>
+                <button class="filter" v-on:click="showFilters">Filter</button>
+                <div>
+                    Selected Colors
+                    <ul v-for="item in filter1_options.selected">
+                        <li>{{ item }}</li>
+                    </ul>
+                </div>
+                <div>
+                    Selected Materials
+                    <ul v-for="item in filter2_options.selected">
+                        <li>{{ item }}</li>
+                    </ul>
+                </div>
+                <div>
+                    Selected Brands
+                    <ul v-for="item in filter3_options.selected">
+                        <li>{{ item }}</li>
+                    </ul>
+                </div>
             </div>
-            <div>
-                Selected Brands
-                <ul v-for="item in filter3_options.selected">
-                    <li>{{ item }}</li>
-                </ul>
-            </div>
+            
         </div>
     </div>
 
@@ -95,18 +151,8 @@ pass in array of options
                 this.selected = [];
             }
         }
+
         const FilterOptions = {
-            props: {
-                title : {
-                    required: true,
-                    type: String,
-                    default: ""
-                },
-                options: {
-                    type: FilterOptionsType,
-                    required: true
-                }
-            },
             template: `
                 <div class="filterOption">
                     <div class="filterTitle" role="filter" v-on:click="toggleShowOptions()">
@@ -121,14 +167,24 @@ pass in array of options
                     
                 </div>
             `,
+            props: {
+                title : {
+                    required: true,
+                    type: String,
+                    default: ""
+                },
+                options: {
+                    type: FilterOptionsType,
+                    required: true
+                }
+            },
             data() {
                 return {
                     showOptions: {
                         required: false,
                         type: Boolean,
                         default: false
-                    },
-                    selectedOptions: this.selected
+                    }
                 }
             },
             methods: {
@@ -145,13 +201,20 @@ pass in array of options
                     links:[],
                     filter1: "Joe mama",
                     filter1_options: {
-                        type: FilterOptionsType
+                        type: FilterOptionsType,
+                        default: new FilterOptionsType([],[])
                     },
                     filter2_options: {
-                        type: FilterOptionsType
+                        type: FilterOptionsType,
+                        default: new FilterOptionsType([],[])
                     },
                     filter3_options: {
-                        type: FilterOptionsType
+                        type: FilterOptionsType,
+                        default: new FilterOptionsType([],[])
+                    },
+                    showingFilters :{
+                        type: Boolean,
+                        default: false
                     }
                 }
             },
@@ -159,7 +222,9 @@ pass in array of options
                 "filter-options": FilterOptions
             },
             methods: {
-
+                showFilters(){
+                    this.showingFilters = !this.showingFilters;
+                }
             },
             watch: {
                 "filter1_options.selected" : function(newVal, oldVal){
