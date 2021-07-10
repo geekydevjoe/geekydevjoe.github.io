@@ -37,6 +37,8 @@
             grid-template-columns: 1fr;
             gap: 16px;
             padding: 8px;
+            overflow: auto;
+            max-height: 100px;
         }
         .filterGroups {
             padding: 16px;
@@ -46,14 +48,28 @@
 
         @media(max-width:600px)
         {
-            .filterGroups {
+            html[data-scroll="0"] .filterOption .filterOptionList {
+                overflow:none;
+                max-height: inherit;
+            }
+            html[data-scroll="0"] .filterGroups {
+                position: fixed;
+                top: 0px;
+                left: 0px;
+                height: 100%;
+                z-index: 9999;
+                overflow: auto;
+                padding:16px;
+                margin:0px;
+            }   
+            html[data-scroll="1"] .filterGroups {
                 position: absolute;
                 top: 0px;
                 left: 0px;
                 height: 100%;
                 animation: appear 0.5s;
-        |   }
-            .filterGroups.hide {
+            }
+            html[data-scroll="1"] .filterGroups.hide {
                 animation: disapear 0.5s;
                 animation-fill-mode:forwards;
             }
@@ -79,32 +95,42 @@
                 display: block;
             }
         }
+        .layout {
+                display: grid;
+                gap: 16px;
+                grid-template-columns: 1fr 1fr;
+            
+            }
+            .body {
+                min-height: 1000px;
+            }
         @media(min-width: 600px){
             button.filter {
                 display: none;
             }
-            .layout {
-                display: grid;
-                gap: 16px;
-                grid-template-columns: 1fr 1fr;
-            }
+         
+           
         }
     </style>
 </head>
 <body>
     <div class="main" id="app">
         <div class="layout">
-            
-            <div class="filterGroups" v-bind:class="{ hide: !showingFilters }">
-            
-                <filter-options title="Frame Colors" :options="filter1_options"></filter-options>
-                <filter-options title="Frame Materials" :options="filter2_options"></filter-options>
-                <filter-options title="Brands" :options="filter3_options"></filter-options>
-
-                <button class="filter" v-on:click="showFilters">Apply</button>
-            </div>
-
             <div>
+                <div class="filterGroups" v-bind:class="{ hide: !showingFilters }">
+            
+                    <filter-options title="Frame Colors" :options="filter1_options"></filter-options>
+                    <filter-options title="Frame Materials" :options="filter2_options"></filter-options>
+                    <filter-options title="Brands" :options="filter3_options"></filter-options>
+                    <filter-options title="Brands2" :options="filter3_options"></filter-options>
+                    <filter-options title="Brands4" :options="filter3_options"></filter-options>
+    
+                    <button class="filter" v-on:click="showFilters">Apply</button>
+                </div>
+    
+            </div>
+            
+            <div class="body">
                 <button class="filter" v-on:click="showFilters">Filter</button>
                 <div>
                     Selected Colors
@@ -249,7 +275,10 @@ pass in array of options
                 setTimeout(function(){
                     self.filter1 = "I'm late";
                     console.log(self.filter1);
-                    self.filter1_options = new FilterOptionsType([{title:"Red", value: 1 }, {title: "Green", value: 2 }], [1]);
+                    self.filter1_options = new FilterOptionsType([{title:"Red", value: 1 }, 
+                            {title: "Green", value: 2 },  
+                            {title: "Blue", value: 3 },
+                            {title: "Pink", value: 4}], [1]);
                     self.filter2_options = new FilterOptionsType([{title:"Metal", value: 10 }, {title: "Plastic", value: 20 }], [10,20]);
                     self.filter3_options = new FilterOptionsType([{title:"Nike", value: 100 }, {title: "Flexon", value: 200 }], []);
                 }, 1000)
@@ -259,6 +288,9 @@ pass in array of options
          
         app.mount('#app');
 
+        document.addEventListener("scroll", function(){
+            document.documentElement.dataset.scroll = window.scrollY < 100 ? 1:0;
+        }, {passive: true});
     </script>
 </body>
 </html>
