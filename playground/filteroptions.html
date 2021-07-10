@@ -1,21 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-scroll="0">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> -->
 
     <title>Vue Test Area</title>
     <link rel="stylesheet" href="site.css">
     <style>
+        :root {
+            font-size: 16px;
+        }
         .main {
-            display: flex;
-            flex: auto;
+            display: grid;
             font-size: 1.2rem;
-            justify-content: flex-start;
-            align-items: center;
             padding: 16px;
         }
+        .header {
+            min-height: 100px;
+        }
+        .layout {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: 190px 1fr;
+        }
+        .body {
+            min-height: 1000px;
+        }
+
         .links {
             max-width: 600px;
             padding: 32px;
@@ -39,20 +51,21 @@
             padding: 8px;
             overflow: auto;
             max-height: 100px;
+            background-color: #fcfcfc;
         }
+
         .filterGroups {
             padding: 16px;
             border-radius: 8px;
             background-color: #e8e8e8;    
         }
 
-        @media(max-width:600px)
-        {
-            html[data-scroll="0"] .filterOption .filterOptionList {
-                overflow:none;
-                max-height: inherit;
+        @media (min-width: 500px) and (max-width:1200px){
+            html[data-scroll="1"] .filterGroups {
+                border-radius: 0px;    
             }
-            html[data-scroll="0"] .filterGroups {
+
+            html[data-scroll="1"] .filterGroups {
                 position: fixed;
                 top: 0px;
                 left: 0px;
@@ -62,14 +75,26 @@
                 padding:16px;
                 margin:0px;
             }   
-            html[data-scroll="1"] .filterGroups {
+            html[data-scroll="1"] .filterOption .filterOptionList {
+                overflow:none;
+                max-height: inherit;
+            }
+        }
+        @media(max-width:600px)
+        {
+            html[data-scroll="0"] .layout {
+                display: grid;
+                gap: 16px;
+                grid-template-columns: auto;
+            }
+            html[data-scroll="0"] .filterGroups {
                 position: absolute;
                 top: 0px;
                 left: 0px;
                 height: 100%;
                 animation: appear 0.5s;
             }
-            html[data-scroll="1"] .filterGroups.hide {
+            html[data-scroll="0"] .filterGroups.hide {
                 animation: disapear 0.5s;
                 animation-fill-mode:forwards;
             }
@@ -95,15 +120,6 @@
                 display: block;
             }
         }
-        .layout {
-                display: grid;
-                gap: 16px;
-                grid-template-columns: 1fr 1fr;
-            
-            }
-            .body {
-                min-height: 1000px;
-            }
         @media(min-width: 600px){
             button.filter {
                 display: none;
@@ -115,6 +131,9 @@
 </head>
 <body>
     <div class="main" id="app">
+        <div class="header">
+            <h1>Some website header</h1>
+        </div>
         <div class="layout">
             <div>
                 <div class="filterGroups" v-bind:class="{ hide: !showingFilters }">
@@ -130,35 +149,64 @@
     
             </div>
             
-            <div class="body">
-                <button class="filter" v-on:click="showFilters">Filter</button>
-                <div>
-                    Selected Colors
-                    <ul v-for="item in filter1_options.selected">
-                        <li>{{ item }}</li>
-                    </ul>
+            <div class="body" >
+                <button class="filter" v-on:click.prevent="showFilters">Filter</button>
+                <div v-on:click.prevent="hideFilters()">
+
+                    <div>
+                        Selected Colors
+                        <ul v-for="item in filter1_options.selected">
+                            <li>{{ item }}</li>
+                        </ul>
+                    </div>
+                    <div>
+                        Selected Materials
+                        <ul v-for="item in filter2_options.selected">
+                            <li>{{ item }}</li>
+                        </ul>
+                    </div>
+                    <div>
+                        Selected Brands
+                        <ul v-for="item in filter3_options.selected">
+                            <li>{{ item }}</li>
+                        </ul>
+                    </div>
+    
+                    <div class="paragraphs">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium quam vulputate dignissim suspendisse in est. Imperdiet dui accumsan sit amet. Amet mattis vulputate enim nulla aliquet porttitor. At quis risus sed vulputate odio ut enim blandit. Sit amet est placerat in egestas erat imperdiet. Duis at tellus at urna condimentum mattis pellentesque id. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Neque convallis a cras semper auctor neque vitae. Nulla aliquet porttitor lacus luctus accumsan tortor.
+    
+                        <!-- Varius duis at consectetur lorem donec massa sapien faucibus. Nibh cras pulvinar mattis nunc. Quisque id diam vel quam elementum pulvinar. Urna molestie at elementum eu facilisis sed odio. Eu ultrices vitae auctor eu. Orci dapibus ultrices in iaculis nunc sed augue lacus. Curabitur vitae nunc sed velit dignissim sodales ut eu. Turpis tincidunt id aliquet risus feugiat. In iaculis nunc sed augue lacus viverra vitae congue. Scelerisque fermentum dui faucibus in ornare quam viverra. Egestas sed sed risus pretium quam vulputate dignissim. Eleifend donec pretium vulputate sapien nec sagittis. Lacus vestibulum sed arcu non odio.
+                        
+                        Eget egestas purus viverra accumsan in nisl. Porta nibh venenatis cras sed felis eget velit aliquet sagittis. Diam in arcu cursus euismod quis viverra nibh. Proin nibh nisl condimentum id venenatis a condimentum vitae sapien. Sit amet luctus venenatis lectus. Fermentum posuere urna nec tincidunt praesent semper feugiat. Accumsan lacus vel facilisis volutpat est. Maecenas pharetra convallis posuere morbi leo urna. Nunc eget lorem dolor sed viverra ipsum nunc. Massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin.
+                        
+                        Ut tristique et egestas quis ipsum suspendisse ultrices. Sem fringilla ut morbi tincidunt augue interdum. Ligula ullamcorper malesuada proin libero nunc consequat. Egestas erat imperdiet sed euismod nisi porta lorem. Natoque penatibus et magnis dis parturient montes nascetur ridiculus mus. Nunc sed augue lacus viverra vitae congue. Non enim praesent elementum facilisis. Sit amet luctus venenatis lectus magna. Tristique senectus et netus et malesuada fames ac turpis. Eget felis eget nunc lobortis mattis aliquam. Iaculis urna id volutpat lacus laoreet non. Eget lorem dolor sed viverra ipsum nunc aliquet bibendum enim. Sed blandit libero volutpat sed cras ornare. Mollis aliquam ut porttitor leo. Fermentum posuere urna nec tincidunt praesent semper. Amet est placerat in egestas erat imperdiet sed. Eu non diam phasellus vestibulum lorem sed risus ultricies. Eget sit amet tellus cras adipiscing enim eu. Ut venenatis tellus in metus vulputate eu scelerisque felis imperdiet. Ullamcorper eget nulla facilisi etiam dignissim.
+                        
+                        Amet luctus venenatis lectus magna fringilla urna. Velit laoreet id donec ultrices tincidunt arcu non. Sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus. Tincidunt eget nullam non nisi est sit amet facilisis magna. Purus viverra accumsan in nisl nisi scelerisque eu ultrices vitae. Eu turpis egestas pretium aenean. Orci ac auctor augue mauris augue neque. Magna fringilla urna porttitor rhoncus dolor purus non enim praesent. Id semper risus in hendrerit gravida rutrum. Non tellus orci ac auctor augue mauris. Diam ut venenatis tellus in metus vulputate eu scelerisque felis. Varius vel pharetra vel turpis nunc eget lorem dolor sed. Massa placerat duis ultricies lacus sed turpis tincidunt. Non nisi est sit amet facilisis magna etiam.
+                        
+                        At ultrices mi tempus imperdiet nulla malesuada. Auctor eu augue ut lectus arcu bibendum at varius vel. Faucibus in ornare quam viverra orci. Ultrices vitae auctor eu augue ut lectus arcu. Commodo elit at imperdiet dui accumsan sit amet nulla facilisi. Donec et odio pellentesque diam volutpat. Molestie a iaculis at erat pellentesque adipiscing commodo. Risus quis varius quam quisque id diam vel quam elementum. Sed vulputate mi sit amet. Lacinia quis vel eros donec ac odio. Adipiscing bibendum est ultricies integer quis auctor. Fermentum dui faucibus in ornare quam.
+                        
+                        Leo in vitae turpis massa sed elementum. Platea dictumst quisque sagittis purus sit. Sagittis aliquam malesuada bibendum arcu vitae elementum. Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa. Arcu ac tortor dignissim convallis. Euismod in pellentesque massa placerat duis ultricies lacus. Enim tortor at auctor urna. Integer enim neque volutpat ac. Eget nulla facilisi etiam dignissim. Magna fermentum iaculis eu non diam phasellus.
+                        
+                        In fermentum posuere urna nec. Lacus suspendisse faucibus interdum posuere lorem. Nulla facilisi nullam vehicula ipsum a arcu. Ut lectus arcu bibendum at varius. At lectus urna duis convallis convallis tellus id interdum. Quam viverra orci sagittis eu volutpat. Pretium fusce id velit ut tortor pretium viverra. Faucibus vitae aliquet nec ullamcorper sit amet. Amet est placerat in egestas erat imperdiet. Quam pellentesque nec nam aliquam sem et tortor consequat id. Et malesuada fames ac turpis egestas sed. Lacinia at quis risus sed vulputate odio.
+                        
+                        Lacinia at quis risus sed vulputate odio ut enim. Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare. Congue quisque egestas diam in arcu. Risus feugiat in ante metus. Quis risus sed vulputate odio ut enim blandit. Aliquam eleifend mi in nulla posuere sollicitudin aliquam ultrices. Duis ultricies lacus sed turpis tincidunt. Mauris ultrices eros in cursus. Volutpat odio facilisis mauris sit amet. Non pulvinar neque laoreet suspendisse interdum consectetur libero id. Fermentum leo vel orci porta non pulvinar neque laoreet suspendisse. Mauris vitae ultricies leo integer malesuada nunc vel. Bibendum neque egestas congue quisque egestas diam in. Augue neque gravida in fermentum et sollicitudin ac. Dictumst quisque sagittis purus sit amet volutpat consequat mauris nunc. Sit amet luctus venenatis lectus. Cras pulvinar mattis nunc sed blandit libero.
+                        
+                        Ridiculus mus mauris vitae ultricies leo. Arcu felis bibendum ut tristique. Lacinia at quis risus sed vulputate. Commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae. Quisque sagittis purus sit amet. In mollis nunc sed id semper risus in. Dui id ornare arcu odio ut sem nulla pharetra diam. Dictum fusce ut placerat orci nulla pellentesque. Integer quis auctor elit sed vulputate. Leo urna molestie at elementum eu facilisis sed odio. Lobortis feugiat vivamus at augue eget arcu dictum varius. Praesent tristique magna sit amet purus gravida. Leo vel orci porta non pulvinar neque laoreet. -->
+    
+                    </div>
                 </div>
-                <div>
-                    Selected Materials
-                    <ul v-for="item in filter2_options.selected">
-                        <li>{{ item }}</li>
-                    </ul>
-                </div>
-                <div>
-                    Selected Brands
-                    <ul v-for="item in filter3_options.selected">
-                        <li>{{ item }}</li>
-                    </ul>
-                </div>
+                
             </div>
             
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/vue@next"></script>
-
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@next"></script> -->
+    
+    <script src="resources/vue.runtime.global.js"></script>
+    <script src="resources/vue.global.js"></script>
     <script type="text/javascript">
 /*
 Filter Options component needs
@@ -182,7 +230,7 @@ pass in array of options
                 <div class="filterOption">
                     <div class="filterTitle" role="filter" v-on:click="toggleShowOptions()">
                         <div>{{ title }}</div>
-                        <div aria-label="">{{ this.showOptions ? "-" : "+" }}</div>
+                        <div aria-label="">{{ this.showOptions ? "&minus;" : "&plus;" }}</div>
                     </div>
                     <div class="filterOptionList" v-if="showOptions">
                         <div v-for="item in options.items">
@@ -249,6 +297,9 @@ pass in array of options
             methods: {
                 showFilters(){
                     this.showingFilters = !this.showingFilters;
+                },
+                hideFilters(){
+                    this.showingFilters = false;
                 }
             },
             watch: {
@@ -280,8 +331,14 @@ pass in array of options
                             {title: "Blue", value: 3 },
                             {title: "Pink", value: 4}], [1]);
                     self.filter2_options = new FilterOptionsType([{title:"Metal", value: 10 }, {title: "Plastic", value: 20 }], [10,20]);
-                    self.filter3_options = new FilterOptionsType([{title:"Nike", value: 100 }, {title: "Flexon", value: 200 }], []);
+                    self.filter3_options = new FilterOptionsType([{title:"Option 1", value: 100 }, {title: "Option 2", value: 200 }], []);
                 }, 1000)
+
+                // document.querySelector("#app .body").addEventListener("click", function(){
+                //     console.log("clicked");            
+                //     self.showingFilters = false;
+                //     //document.querySelector("#app .filterGroups").classList.add("hide");
+                // });
             }
         }
         const app = Vue.createApp(App);
@@ -289,8 +346,9 @@ pass in array of options
         app.mount('#app');
 
         document.addEventListener("scroll", function(){
-            document.documentElement.dataset.scroll = window.scrollY < 100 ? 1:0;
+            document.documentElement.dataset.scroll = window.scrollY < 100 ? 0 : 1;
         }, {passive: true});
+       
     </script>
 </body>
 </html>
