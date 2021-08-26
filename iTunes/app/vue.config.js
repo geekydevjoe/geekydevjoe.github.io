@@ -5,7 +5,7 @@
  */
  module.exports = {
     // options...
-    publicPath: process.env.NODE_ENV === 'production' ? 'iTunes/app/output/' : '/',
+    publicPath: process.env.NODE_ENV === 'production' ? '' : '/',
     outputDir: "output",
     filenameHashing: false
 }
