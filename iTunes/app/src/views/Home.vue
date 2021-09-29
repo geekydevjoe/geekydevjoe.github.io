@@ -1,7 +1,8 @@
 <template>
   <div class="home">
-    <form @submit.prevent="searchItunes(searchText)">
-      <input v-model="searchText" placeholder="search for album"/>
+    <form @submit="searchItunes(searchText)">
+      </form>
+      <input v-model="searchText"  placeholder="search for album"/>
       <div v-if="data.resultCount > 0">
          <div v-for="album in data.results" :key="album.collectionName">
            <h3>{{ album.collectionName }}</h3>
@@ -9,7 +10,6 @@
            <h4>Price: {{ album.collectionPrice }}</h4>
          </div>
       </div>
-    </form>    
   </div>
 </template>
 
