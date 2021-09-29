@@ -110,23 +110,40 @@
                         { id: 2, name: "Melanie", schedule :['0830','0930','1030']},
                         { id: 3, name: "Izzy", schedule :['1000','1030','1100']}];
 
+            // function generateTimeSlotCodes(start, increment, end){
+            //     var codes = [];
+
+            //     for(var index = start; index <= end; index += increment){
+            //         codes.push(index);
+            //     }
+            //     return codes;
+            // }
+            
             var tims = [{code: '0800', label: '08:00'}
-                        , {'code':'0830', label:'08:30'}
-                        , {'code':'0900', label:'09:00'}
-                        , {'code':'0930', label:'09:30'}
-                        , {'code':'1000', label:'10:00'}
-                        , {'code':'1030', label:'10:30'}
-                        , {'code':'1100', label:'11:00'}
-                        , {'code':'1130', label:'11:30'}
-                        , {'code':'1200', label:'12:00'}
-                        , {'code':'1230', label:'12:30'}
-                        , {'code':'0100', label:'01:00'}
-                        , {'code':'0130', label:'01:30'}
-                        , {'code':'0200', label:'02:00'}
-                        , {'code':'0230', label:'02:30'}
-                        , {'code':'0300', label:'03:00'}
-                        , {'code':'0330', label:'03:30'}
-                        , {'code':'0400', label:'04:00'}
+                        , {code:'0815', label:'08:15'}
+                        , {code:'0830', label:'08:30'}
+                        , {code:'0845', label:'08:45'}
+                        , {code:'0900', label:'09:00'}
+                        , {code:'0915', label:'09:15'}
+                        , {code:'0930', label:'09:30'}
+                        , {code:'0945', label:'09:45'}
+                        , {code:'1000', label:'10:00'}
+                        , {code:'1015', label:'10:15'}
+                        , {code:'1030', label:'10:30'}
+                        , {code:'1045', label:'10:45'}
+                        , {code:'1100', label:'11:00'}
+                        , {code:'1130', label:'11:30'}
+                        , {code:'1200', label:'12:00'}
+                        , {code:'1230', label:'12:30'}
+                        , {code:'0100', label:'01:00'}
+                        , {code:'0130', label:'01:30'}
+                        , {code:'0200', label:'02:00'}
+                        , {code:'0230', label:'02:30'}
+                        , {code:'0300', label:'03:00'}
+                        , {code:'0330', label:'03:30'}
+                        , {code:'0400', label:'04:00'}
+                        , {code:'0430', label:'04:30'}
+                        , {code:'0500', label:'05:00'}
                     ];
             self.timeSlots = ko.observableArray(tims.map(n => new TimeSlot(n.code, n.label)));
             self.doctors = ko.observableArray(docs.map(n => new Doctor(n.id, n.name, n.schedule)));
