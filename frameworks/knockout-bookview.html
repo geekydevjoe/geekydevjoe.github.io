@@ -6,7 +6,7 @@
     </head>    
 <body>
     <style>
-        .time {
+        /* .time {
             width: 80px;
         }
         .doctor {
@@ -17,9 +17,15 @@
         }
         .others {
             width: 100px;
-        }
-        .doctor-assigned {
+        } */
+        /* .doctor-assigned {
             
+        } */
+        table.table td {
+            border: solid 1px gray;
+        }
+        table.table th {
+            border: solid 1px white;
         }
     </style>
     <div class="container" id="container">
@@ -86,84 +92,104 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-
+        /*
+        For Each time slot (8:00 AM)
+          -Each doctor get their own row
+            -Show Appointment (patient and type) as columns
+            -Show multiple rows if doctor is double booked
+            8:00AM Dr. John  - Joe Patient - Contact Lens Fitting
+            8:00AM Dr. John  - John Smith  - Eye Exam
+        [+] 8:00AM Dr. Jill
+        [+] 8:15AM Dr. John 
+        [+] 8:15AM Dr. Jill  
+        Events
+        -Clicking Plus to schedule appointment
+        -Clicking Patient name to show details
+        -Selecting action from drop-down (far right).
+        
+        */
 
         // simple ViewModel object
         class TimeSlot {
-            constructor(code, display){
-                this.code = code;
-                this.display = display;
+            constructor(date){
+                this.code = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false});
+                this.display = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'});
             }
         }
+
+        class DateHelper {
+            static startOfDay(date){
+                var dt = new Date(date);
+                dt.setHours(8);
+                dt.setMinutes(0);
+                dt.setMilliseconds(0);
+                dt.setSeconds(0);
+                return dt;
+            }
+
+            static generateDateRanges(start, startHour, endHour, increment){
+                var times = [];
+                var dt = new Date(start);
+                times.push(new TimeSlot(dt));
+                for (var index = startHour; dt.getHours() < endHour; index += increment){
+                    dt.setMinutes(dt.getMinutes() + increment);
+                    times.push(new TimeSlot(dt));
+                }
+                return times;
+            }
+
+            static timeSlots(start, startHour, endHour, increment){
+                var times = [];
+                var dt = new Date(start);
+                times.push(dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false}));
+                for (var index = startHour; dt.getHours() < endHour; index += increment){
+                    dt.setMinutes(dt.getMinutes() + increment);
+                    times.push(dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false}));
+                }
+                return times;
+            }
+        }
+
         class Doctor {
             constructor(id, name, schedule){
                 this.id = id;
                 this.name = name;
                 this.schedule = schedule;
+                this.visible = ko.observable(true);
             }
         }
-        var ViewModel = function(){
+        
+        class ViewModel
+        {
+            constructor(){
+                this.startOfDay = DateHelper.startOfDay(new Date());
+                this.timeSlots = ko.observableArray(DateHelper.generateDateRanges(this.startOfDay, 8, 17, 15));
 
-            var self = this;
-            self.message = ko.observable("");
-            var docs = [{ id: 1, name: "Joe", schedule :['0800','0830','1030']},
-                        { id: 2, name: "Melanie", schedule :['0830','0930','1030']},
-                        { id: 3, name: "Izzy", schedule :['1000','1030','1100']}];
-
-            // function generateTimeSlotCodes(start, increment, end){
-            //     var codes = [];
-
-            //     for(var index = start; index <= end; index += increment){
-            //         codes.push(index);
-            //     }
-            //     return codes;
-            // }
+                this.message = ko.observable("");
+                var docs = [{ id: 1, name: "Joe", schedule : DateHelper.timeSlots(this.startOfDay, 8, 12, 15)},
+                        { id: 2, name: "Jane", schedule : DateHelper.timeSlots(this.startOfDay, 8, 12, 15) },
+                        { id: 3, name: "McDonald", schedule : DateHelper.timeSlots(this.startOfDay, 8, 12, 15) }];
+           
+                this.doctors = ko.observableArray(docs.map(n => new Doctor(n.id, n.name, n.schedule)));
+            }
             
-            var tims = [{code: '0800', label: '08:00'}
-                        , {code:'0815', label:'08:15'}
-                        , {code:'0830', label:'08:30'}
-                        , {code:'0845', label:'08:45'}
-                        , {code:'0900', label:'09:00'}
-                        , {code:'0915', label:'09:15'}
-                        , {code:'0930', label:'09:30'}
-                        , {code:'0945', label:'09:45'}
-                        , {code:'1000', label:'10:00'}
-                        , {code:'1015', label:'10:15'}
-                        , {code:'1030', label:'10:30'}
-                        , {code:'1045', label:'10:45'}
-                        , {code:'1100', label:'11:00'}
-                        , {code:'1130', label:'11:30'}
-                        , {code:'1200', label:'12:00'}
-                        , {code:'1230', label:'12:30'}
-                        , {code:'0100', label:'01:00'}
-                        , {code:'0130', label:'01:30'}
-                        , {code:'0200', label:'02:00'}
-                        , {code:'0230', label:'02:30'}
-                        , {code:'0300', label:'03:00'}
-                        , {code:'0330', label:'03:30'}
-                        , {code:'0400', label:'04:00'}
-                        , {code:'0430', label:'04:30'}
-                        , {code:'0500', label:'05:00'}
-                    ];
-            self.timeSlots = ko.observableArray(tims.map(n => new TimeSlot(n.code, n.label)));
-            self.doctors = ko.observableArray(docs.map(n => new Doctor(n.id, n.name, n.schedule)));
-            
-            self.rowsForTimeSlot = function(timeSlot) {
+            rowsForTimeSlot(timeSlot) {
                 // get doctors for that selected timeslot
-                var docs = self.doctors().filter( n => n.schedule.indexOf(timeSlot.code) >= 0 );
+                var docs = this.doctors().filter( n => n.schedule.indexOf(timeSlot.code) >= 0 );
                 if (docs.length == 0){
                     // return timeslot instead
                     return [{ time: timeSlot, doctor: new Doctor(0,'',[])}];
                 }
-                return docs.map(n=> { return {time: timeSlot, doctor: n }; });
+                var backToMe = this;
+                return docs.map(n=> { return {time: timeSlot, doctor: n, self: backToMe }; });
             }
 
-            self.details =function(d){
+            details(d) {
                 console.log(`${d.time.display} - ${d.doctor.name}`);
-                self.message(`${d.time.display} - ${d.doctor.name}`);
+
+                d.self.message(`${d.time.display} - ${d.doctor.name}`);
             }
         }
-
 
         var vm = new ViewModel();
         ko.applyBindings(vm, document.getElementById("container"));
