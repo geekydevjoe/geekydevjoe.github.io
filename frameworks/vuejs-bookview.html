@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+        
+    </head>    
+<body>
+    <style>
+        /* .time {
+            width: 80px;
+        }
+        .doctor {
+            width: 300px;
+        }
+        .patient {
+            width: 200px;
+        }
+        .others {
+            width: 100px;
+        } */
+        /* .doctor-assigned {
+            
+        } */
+        table.table td {
+            border: solid 1px gray;
+        }
+        table.table th {
+            border: solid 1px white;
+        }
+    </style>
+
+
+    <script type="text/template" id="time-row">
+        <tbody data-bind="template: { name: 'time-row', foreach: timeSlots }">
+        </tbody>
+        <!-- ko foreach: $parent.rowsForTimeSlot($data) -->
+        <tr>
+            <td data-bind="text: time.display" ></td>
+            <td data-bind="template: { name: 'doctor-name' , data: doctor}" ></td>
+            <td class="patient">&nbsp;</td>
+            <td class="others">&nbsp;</td>
+        </tr>
+        <!-- /ko -->
+    </script>
+    <script type="text/template" id="doctor-row">
+        <tr>
+            <td data-bind="text: time.display" class="time"></td>
+            <td data-bind="template: { name: 'doctor-name' , data: $data }" class="doctor"></td>
+            <td class="patient">&nbsp;</td>
+            <td class="others">&nbsp;</td>
+        </tr>
+    </script>
+    <script type="text/template" id="doctor-name">
+        <!-- ko if: doctor.id != 0 -->
+        <div class="doctor-assigned" data-bind="text: doctor.name, click: $root.details"></div>
+        <!-- /ko -->
+    </script>
+
+    <div class="container">
+        <div id="app">
+            
+        </div>
+    </div>
+
+<!-- CSS only -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://unpkg.com/vue@next"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        /*
+        For Each time slot (8:00 AM)
+          -Each doctor get their own row
+            -Show Appointment (patient and type) as columns
+            -Show multiple rows if doctor is double booked
+            8:00AM Dr. John  - Joe Patient - Contact Lens Fitting
+            8:00AM Dr. John  - John Smith  - Eye Exam
+        [+] 8:00AM Dr. Jill
+        [+] 8:15AM Dr. John 
+        [+] 8:15AM Dr. Jill  
+        Events
+        -Clicking Plus to schedule appointment
+        -Clicking Patient name to show details
+        -Selecting action from drop-down (far right).
+        
+        */
+
+        // simple ViewModel object
+        class TimeSlot {
+            constructor(date){
+                this.code = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false});
+                this.display = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'});
+            }
+        }
+
+        class DateHelper {
+            static startOfDay(date){
+                var dt = new Date(date);
+                dt.setHours(8);
+                dt.setMinutes(0);
+                dt.setMilliseconds(0);
+                dt.setSeconds(0);
+                return dt;
+            }
+
+            static generateDateRanges(start, startHour, endHour, increment){
+                var times = [];
+                var dt = new Date(start);
+                times.push(new TimeSlot(dt));
+                for (var index = startHour; dt.getHours() < endHour; index += increment){
+                    dt.setMinutes(dt.getMinutes() + increment);
+                    times.push(new TimeSlot(dt));
+                }
+                return times;
+            }
+
+            static timeSlots(start, startHour, endHour, increment){
+                var times = [];
+                var dt = new Date(start);
+                times.push(dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false}));
+                for (var index = startHour; dt.getHours() < endHour; index += increment){
+                    dt.setMinutes(dt.getMinutes() + increment);
+                    times.push(dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false}));
+                }
+                return times;
+            }
+        }
+
+        class Doctor {
+            constructor(id, name, schedule){
+                this.id = id;
+                this.name = name;
+                this.schedule = schedule;
+                this.visible = ko.observable(true);
+            }
+        }
+        
+        class ViewModel
+        {
+            //     this.message = ko.observable("");
+            //     var docs = [{ id: 1, name: "Joe", schedule : DateHelper.timeSlots(this.startOfDay, 8, 12, 15)},
+            //             { id: 2, name: "Jane", schedule : DateHelper.timeSlots(this.startOfDay, 8, 12, 15) },
+            //             { id: 3, name: "McDonald", schedule : DateHelper.timeSlots(this.startOfDay, 8, 12, 15) }];
+           
+            //     this.doctors = ko.observableArray(docs.map(n => new Doctor(n.id, n.name, n.schedule)));
+            // }
+            
+            // rowsForTimeSlot(timeSlot) {
+            //     // get doctors for that selected timeslot
+            //     var docs = this.doctors().filter( n => n.schedule.indexOf(timeSlot.code) >= 0 );
+            //     if (docs.length == 0){
+            //         // return timeslot instead
+            //         return [{ time: timeSlot, doctor: new Doctor(0,'',[])}];
+            //     }
+            //     var backToMe = this;
+            //     return docs.map(n=> { return {time: timeSlot, doctor: n, self: backToMe }; });
+            // }
+
+            // details(d) {
+            //     console.log(`${d.time.display} - ${d.doctor.name}`);
+
+            //     d.self.message(`${d.time.display} - ${d.doctor.name}`);
+            // }
+        }
+
+        var vm = new ViewModel();
+        //ko.applyBindings(vm, document.getElementById("container"));
+        
+        const PatientCell = {
+            template: `<p>I am a patient</p>`,   
+        }
+        const TimeSlotRow = {
+            template: `<tr>
+                <td><button class="btn btn-info">+</button></td>
+                <td class="time">time</td>
+                <td class="doctor"></td>
+                <td class="patient">&nbsp;</td>
+                <td class="others">&nbsp;</td>
+            </tr>`
+        }
+
+        const App = {
+            data(){
+                return {
+                    counter: 0,
+                    timeSlots: [],
+                    startOfDay: DateHelper.startOfDay(new Date()),
+                    message: ""
+                }
+            },
+            template: `
+            <div>
+                <a href="/">Home</a>
+            </div>
+            
+            <div style="position: sticky; top: 0px;height: 50px;background-color: white;padding-top:8px">
+                <h2>{{ message }}</h2>
+            </div>
+            <table class="table table-striped" >
+                <thead class="thead-dark" style="position: sticky; top: 50px;">
+                    <tr>
+                        <th></th>
+                        <th class="time">Time</th>
+                        <th class="doctor">Doctor</th>
+                        <th class="patient">Patient</th>
+                        <th class="others">Insurance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <time-slot-row v-for="item of timeSlots"></time-slot-row>
+                </tbody>
+            </table>
+            `,
+            components: {
+                'patient-cell': PatientCell,
+                'time-slot-row': TimeSlotRow
+            },
+            mounted(){
+                this.timeSlots = DateHelper.generateDateRanges(this.startOfDay, 8, 17, 15);
+                console.log("mounted");
+                console.log(`time slots ${this.timeSlots}`);
+            }
+        };
+
+        Vue.createApp(App).mount("#app");
+
+    </script>
+</body>
+</html>
+
