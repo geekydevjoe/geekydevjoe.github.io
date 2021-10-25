@@ -10,7 +10,7 @@ export const itunesSearch = async (search:string):Promise<ItunesTypes> =>
           method: "GET",
           headers,
           mode: "cors",
-          cache: "default"
+          cache: "no-cache"
         }
       );
       return await fetch(request).then(val => val.json());
@@ -26,7 +26,6 @@ export const itunesFindPodcastById = async (id:string):Promise<ItunesTypes> =>
         {
           method: "GET",
           headers,
-          mode: "cors",
           cache: "no-cache"
         }
       );
