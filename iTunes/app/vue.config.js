@@ -7,8 +7,5 @@
     // options...
     publicPath: process.env.NODE_ENV === 'production' ? '' : '/',
     outputDir: "output",
-    filenameHashing: false,
-    devServer: {
-        proxy: 'https://geekydevjoe.github.io/',
-    }
+    filenameHashing: false
 }
