@@ -4,9 +4,9 @@ export const itunesSearch = async (search:string):Promise<ItunesTypes> =>
     await fetch(
         `https://itunes.apple.com/search?term=${search}&entity=podcast`, {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
+            mode: 'no-cors', // no-cors, *cors, same-origin
+            ////cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            ////credentials: 'same-origin', // include, *same-origin, omit
             headers: {
                 'Access-Control-Allow-Origin': '*',
             },
