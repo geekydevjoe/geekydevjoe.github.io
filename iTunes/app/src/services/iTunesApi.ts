@@ -2,7 +2,6 @@ import { ItunesTypes } from "@/types/itunesTypes";
 
 export const itunesSearch = async (search:string):Promise<ItunesTypes> =>
 {
-
     const headers = new Headers();
     headers.append("Access-Control-Allow-Origin","*")
     const request = new Request(
@@ -15,6 +14,27 @@ export const itunesSearch = async (search:string):Promise<ItunesTypes> =>
         }
       );
       return await fetch(request).then(val => val.json());
+}
+
+export const itunesFindPodcastById = async (id:string):Promise<ItunesTypes> =>
+{
+    const headers = new Headers();
+    headers.append("Access-Control-Allow-Origin","*");
+    const url = `https://itunes.apple.com/lookup?id=${id}`;
+    console.log(url);
+    const request = new Request(
+        url,
+        {
+          method: "GET",
+          headers,
+          mode: "cors",
+          cache: "no-cache"
+        }
+      );
+      return await fetch(request).then(val => {
+        console.log(val);
+        return val.json();
+      });
 }
     
 

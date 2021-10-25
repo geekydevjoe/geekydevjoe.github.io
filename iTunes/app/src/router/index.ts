@@ -8,6 +8,11 @@ const routes: Array<RouteRecordRaw> = [
     component: Home
   },
   {
+    path: '/podcast/:id',
+    name: 'iTunes Podcast',
+    component: () => import('../views/PodcastById.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting
