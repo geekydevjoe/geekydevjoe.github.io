@@ -8,7 +8,8 @@
          <div v-for="album in data.results" :key="album.collectionName">
            <h3>{{ album.collectionName }}</h3>
            <img :src="album.artworkUrl100" alt="aalbum artwork" />
-           <h4>Price: {{ album.collectionPrice }}</h4>
+           <h4>iTunesID: {{ album.collectionId }}</h4>
+            <router-link :to="{ name: 'PodcastDetails',params:{id: album.collectionId} }">Details</router-link> 
          </div>
       </div>
   </div>
@@ -18,8 +19,6 @@
 import { ItunesTypes } from '../types/itunesTypes';
 import { defineComponent } from 'vue';
 import { itunesSearch } from '../services/iTunesApi';
-
-declare var ApiClient: any;
 
 export default defineComponent({
   name: 'Home',

@@ -9,7 +9,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/podcast/:id',
-    name: 'iTunes Podcast',
+    name: 'PodcastDetails',
     component: () => import('../views/PodcastById.vue')
   },
   {
