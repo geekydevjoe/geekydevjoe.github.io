@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/podcast/:id',
     name: 'PodcastDetails',
-    component: () => import('../views/PodcastById.vue')
+    component: () => import(/* webpackChunkName: "podcastdetails" */ '../views/PodcastById.vue')
   },
   {
     path: '/about',

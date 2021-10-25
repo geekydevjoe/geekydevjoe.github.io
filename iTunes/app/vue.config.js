@@ -7,5 +7,11 @@
     // options...
     publicPath: process.env.NODE_ENV === 'production' ? '' : '/',
     outputDir: "output",
-    filenameHashing: false
+    filenameHashing: false,
+    configureWebpack: {
+        output: {
+            filename: 'js/[name].js',
+            chunkFilename: 'js/[name].js'
+        }
+    }
 }
