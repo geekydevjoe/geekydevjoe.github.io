@@ -28,6 +28,16 @@
             border: solid 1px white;
         }
     </style>
+    
+    <script type="text/template" id="dialog">
+        <div>
+            Dialog
+            <h3 data-bind="text: title"></h3>
+            <div data-bind="template: { name: innerTemplate, data: $data }">
+            </div>
+        </div>
+    </script>
+   
     <div class="container" id="container">
         <div>
             <a href="/">Home</a>
@@ -52,7 +62,17 @@
                 <!-- /ko -->
             </tbody>
         </table>
+
+        <div data-bind="template: { name: 'dialog', data: new JoeDialog() }">
+
+        </div>
+    
     </div>
+    <script type="text/template" id="inner">
+        <div>
+            inner template
+        </div>
+    </script>
 
     <script type="text/template" id="time-row">
         <tbody data-bind="template: { name: 'time-row', foreach: timeSlots }">
@@ -158,12 +178,20 @@
                 this.visible = ko.observable(true);
             }
         }
+
+        class JoeDialog {
+            constructor(){
+                this.doctor = new Doctor(199, "Joe Dr", []);
+                this.title = "joe title";
+                this.innerTemplate = "doctor-name";
+            }
+        }
         
         class ViewModel
         {
             constructor(){
                 this.startOfDay = DateHelper.startOfDay(new Date());
-                this.timeSlots = ko.observableArray(DateHelper.generateDateRanges(this.startOfDay, 8, 17, 15));
+                this.timeSlots = ko.observableArray(DateHelper.generateDateRanges(this.startOfDay, 8, 9, 15));
 
                 this.message = ko.observable("");
                 var docs = [{ id: 1, name: "Joe", schedule : DateHelper.timeSlots(this.startOfDay, 8, 12, 15)},
