@@ -1,8 +1,8 @@
 export interface ItunesTypes {
     resultCount: number,
-    results: [Result]
+    results: [Album]
 }
-export interface Result {
+export interface Album {
     collectionName: string,
     collectionId: string,
     album: string,
@@ -10,5 +10,7 @@ export interface Result {
     artworkUrl100: string,
     artworkUrl600: string,
     doSomething():string,
-    feedUrl: string
+    feedUrl: string,
+    artistName: string,
+    genres: [string]
 }

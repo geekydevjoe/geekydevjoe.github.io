@@ -1,21 +1,27 @@
 <template>
   <div class="home">
       <div v-if="data.resultCount > 0">
-         <div v-for="podcast in data.results" :key="podcast.collectionName">
-           <h3>{{ podcast.collectionName }}</h3>
-           <img :src="podcast.artworkUrl600" alt="album artwork" />
-           <div>iTunesID: {{ podcast.collectionId }}</div>
-           <div>{{ podcast.feedUrl }}</div>
-           <a :href="icatcherLink(podcast.collectionId)">iCatcher</a>
+         <div v-for="podcast in data.results" :key="podcast.collectionName" class="card">
+           <img :src="podcast.artworkUrl600"  class="card-img-top rounded" alt="podcast artwork" />
+           <div class="card-body">
+              <h3 class="card-title">{{ podcast.collectionName }}</h3>
+              <div class="card-text">
+                <h5>{{ podcast.artistName }}</h5>
+                <div>iTunesID: {{ podcast.collectionId }}</div>
+                <div>{{ podcast.feedUrl }}</div>
+                <a class="btn btn-primary" :href="icatcherLink(podcast.collectionId)">iCatcher</a>
+              </div>
+           </div>
          </div>
       </div>
   </div>
 </template>
 
 <script lang="ts">
-import { ItunesTypes, Result } from '../types/itunesTypes';
+import { ItunesTypes, Album } from '../types/itunesTypes';
 import { defineComponent } from 'vue';
 import { itunesFindPodcastById } from '../services/iTunesApi';
+import PodcastCard from '../components/PodcastCard.vue';
 
 export default defineComponent({
   name: 'PodcastById',
