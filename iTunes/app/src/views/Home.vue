@@ -7,9 +7,10 @@
       <div v-if="data.resultCount > 0">
          <div v-for="album in data.results" :key="album.collectionName">
            <h3>{{ album.collectionName }}</h3>
-           <img :src="album.artworkUrl100" alt="aalbum artwork" />
-           <h4>iTunesID: {{ album.collectionId }}</h4>
-            <router-link :to="{ name: 'PodcastDetails',params:{id: album.collectionId} }">Details</router-link> 
+           <router-link :to="{ name: 'PodcastDetails',params:{id: album.collectionId} }"><img :src="album.artworkUrl100" alt="aalbum artwork" /></router-link>
+           <div>iTunesID: {{ album.collectionId }}</div>
+           <div>{{ album.feedUrl }}</div>
+          
          </div>
       </div>
   </div>

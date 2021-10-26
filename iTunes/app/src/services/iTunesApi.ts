@@ -3,7 +3,8 @@ import { ItunesTypes } from "@/types/itunesTypes";
 export const itunesSearch = async (search:string):Promise<ItunesTypes> =>
 {
     const headers = new Headers();
-    headers.append("Access-Control-Allow-Origin","*")
+    //headers.append("Access-Control-Allow-Origin","*")
+    headers.append("Accept","*/*");
     const request = new Request(
         `https://itunes.apple.com/search?term=${search}&entity=podcast`,
         {
@@ -19,13 +20,15 @@ export const itunesSearch = async (search:string):Promise<ItunesTypes> =>
 export const itunesFindPodcastById = async (id:string):Promise<ItunesTypes> =>
 {
     const headers = new Headers();
-    headers.append("Access-Control-Allow-Origin","*");
+    //headers.append("Access-Control-Allow-Origin","*");
+    headers.append("Accept","*/*");
     const url = `https://itunes.apple.com/lookup?id=${id}`;
     const request = new Request(
         url,
         {
           method: "GET",
           headers,
+          mode: "cors",
           cache: "no-cache"
         }
       );

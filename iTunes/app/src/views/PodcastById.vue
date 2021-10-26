@@ -1,20 +1,19 @@
 <template>
   <div class="home">
-    ID: {{ this.iTunesId }}
-    <button @click="find">go</button>
-
       <div v-if="data.resultCount > 0">
-         <div v-for="album in data.results" :key="album.collectionName">
-           <h3>{{ album.collectionName }}</h3>
-           <img :src="album.artworkUrl100" alt="aalbum artwork" />
-           <h4>Price: {{ album.collectionPrice }}</h4>
+         <div v-for="podcast in data.results" :key="podcast.collectionName">
+           <h3>{{ podcast.collectionName }}</h3>
+           <img :src="podcast.artworkUrl600" alt="album artwork" />
+           <div>iTunesID: {{ podcast.collectionId }}</div>
+           <div>{{ podcast.feedUrl }}</div>
+           <a :href="icatcherLink(podcast.collectionId)">iCatcher</a>
          </div>
       </div>
   </div>
 </template>
 
 <script lang="ts">
-import { ItunesTypes } from '../types/itunesTypes';
+import { ItunesTypes, Result } from '../types/itunesTypes';
 import { defineComponent } from 'vue';
 import { itunesFindPodcastById } from '../services/iTunesApi';
 
@@ -33,6 +32,9 @@ export default defineComponent({
     this.find();
   },
   methods: {
+    icatcherLink(id: string){
+      return `icatcher://itunes/${id}`;
+    },
     async find(){
       this.iTunesId = this.$route.params.id.toString();
       console.log(this.iTunesId);

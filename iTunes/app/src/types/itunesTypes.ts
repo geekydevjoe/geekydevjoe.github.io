@@ -4,8 +4,11 @@ export interface ItunesTypes {
 }
 export interface Result {
     collectionName: string,
+    collectionId: string,
     album: string,
     collectionPrice: number,
     artworkUrl100: string,
-    doSomething():string
+    artworkUrl600: string,
+    doSomething():string,
+    feedUrl: string
 }
