@@ -6,7 +6,7 @@ export const itunesSearch = async (search:string):Promise<ItunesTypes> =>
     //headers.append("Access-Control-Allow-Origin","*")
     headers.append("Accept","*/*");
     const request = new Request(
-        `https://itunes.apple.com/search?term=${search}&entity=podcast`,
+        `https://itunes.apple.com/search?term=${search}&entity=podcast&r=${Math.random()}`,
         {
           method: "GET",
           headers,
@@ -23,7 +23,7 @@ export const itunesFindPodcastById = async (id:number):Promise<ItunesTypes> =>
     //headers.append("Access-Control-Allow-Origin","*");
     headers.append("Accept","*/*");
     const iTunesID = id;
-    const url = `https://itunes.apple.com/lookup?id=${id}`;
+    const url = `https://itunes.apple.com/lookup?id=${id}&r=${Math.random()}`;
     const request = new Request(
         url,
         {

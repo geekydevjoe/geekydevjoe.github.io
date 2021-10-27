@@ -1,8 +1,10 @@
 <template>
   <div class="home" style="display: flex; justify-content: center">
-      <div v-if="data">
-         <div class="card" style="max-width: 400px">
-           <img :src="data.artworkUrl600"  class="card-img-top rounded" alt="podcast artwork" />
+      <div v-if="data" class="indented">
+         <div class="card">
+            <div v-if="data.artworkUrl600 !=''">
+             <img :src="data.artworkUrl600" class="card-img-top rounded" alt="podcast artwork" />
+            </div>
            <div class="card-body">
               <h3 class="card-title">{{ data.collectionName }}</h3>
               <div class="card-text">
@@ -16,7 +18,15 @@
       </div>
   </div>
 </template>
-
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+  .card {
+    max-width: 400px;padding:16px;
+  }
+  .idented {
+    padding-left:24px;padding-right: 24px;
+  }
+</style>
 <script lang="ts">
 import { ItunesTypes, Result } from '../types/itunesTypes';
 import { defineComponent } from 'vue';
