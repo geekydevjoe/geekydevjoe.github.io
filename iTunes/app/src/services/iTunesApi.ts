@@ -34,22 +34,8 @@ export const itunesFindPodcastById = async (id:number):Promise<ItunesTypes> =>
         }
       );
       return await fetch(request).then(val => {
-        //return val.json();
-        const result : ItunesTypes = {
-          resultCount : 0,
-          results: [{
-            collectionName: '',
-            album: '',
-            collectionPrice: 0,
-            artworkUrl100: '',
-            artworkUrl600: '',
-            artistName: '',
-            collectionId: 0
-          }]
-        };
-        return result;
+        return val.json();
       }).catch(function(){
-
         const result : ItunesTypes = {
           resultCount : 0,
           results: []
