@@ -7,9 +7,9 @@
       <div v-if="data.resultCount > 0" class="results">
          <div v-for="data in data.results" :key="data.collectionName">
            <div class="card">
-              <div v-if="data.artworkUrl100 !=''">
+              <div v-if="data.artworkUrl600 !=''">
               <router-link :to="{ name: 'PodcastDetails',params:{id: data.collectionId} }">
-              <img :src="data.artworkUrl100" class="card-img-top rounded" alt="podcast artwork" />
+              <img :src="data.artworkUrl600" class="card-img-top rounded" alt="podcast artwork" />
               </router-link>
               </div>
               <div class="card-body">

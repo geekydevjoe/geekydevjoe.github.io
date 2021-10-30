@@ -28,10 +28,12 @@
   }
 </style>
 <script lang="ts">
-import { ItunesTypes, Result } from '../types/itunesTypes';
+import { Result } from '../types/itunesTypes';
 import { defineComponent } from 'vue';
 import { itunesFindPodcastById, blankResult } from '../services/iTunesApi';
 //import PodcastCard from '../components/PodcastCard.vue';
+
+//declare function updateMeta(id: any): any;
 
 export default defineComponent({
   name: 'PodcastById',
@@ -46,8 +48,15 @@ export default defineComponent({
   mounted(){
     console.log("mounted");
     this.find();
+    this.updateMeta(Number(this.$route.params.id));
   },
   methods: {
+    updateMeta(id: number){
+      var obj = document.querySelector('meta[name="apple-itunes-app"]');
+      if (obj != null){
+        obj.setAttribute("content", `app-id=414419105, app-argument=${id}`);
+      }
+    },
     icatcherLink(id: string){
       return `icatcher://itunes/${id}`;
     },
