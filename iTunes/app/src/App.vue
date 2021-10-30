@@ -7,6 +7,30 @@
 </template>
 
 <style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color:#212529;
+    --text-color: white;  
+    --bs-body-color: white;
+    --bs-body-bg:#212529;
+  }
+}
+@media (prefers-color-scheme: light) {
+:root {
+    --background-color: white;
+    --text-color:#212529;
+    --bs-body-color: #212529;
+    --bs-body-bg: #fff;
+  }
+}
+* :not(input) {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+.card {
+  background-color: var(--background-color);
+  border-color: var(--text-color);
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

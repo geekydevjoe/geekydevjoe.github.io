@@ -217,6 +217,12 @@
 
                 d.self.message(`${d.time.display} - ${d.doctor.name}`);
             }
+
+            doSomething(){
+                setTimeout(function(){
+                    console.log("do something"+this.startOfDay);
+                }.bind(this),5000);
+            }
         }
 
         var vm = new ViewModel();
