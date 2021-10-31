@@ -1,27 +1,38 @@
 <template>
-  <div class="home" style="display: flex; justify-content: center">
+<div>
+  <div id="nav">
+    <button @click="goBack" class="btn btn-link">Home</button>
+  </div>
+  <div class="podcastContainer">  
       <div v-if="data" class="indented">
          <div class="card">
             <div v-if="data.artworkUrl600 !=''">
-             <img :src="data.artworkUrl600" class="card-img-top rounded" alt="podcast artwork" />
+             <img :src="data.artworkUrl600" class="card-img-top rounded artwork" alt="podcast artwork" />
             </div>
            <div class="card-body">
               <h3 class="card-title">{{ data.collectionName }}</h3>
               <div class="card-text">
-                <h5>{{ data.artistName }}</h5>
-                <div>iTunesID: {{ data.collectionId }}</div>
-                <div>{{ data.feedUrl }}</div>
-                <a class="btn btn-primary" :href="icatcherLink(data.collectionId)">iCatcher</a>
+                <h6>{{ data.artistName }}</h6>
+                <div>
+                  <a :href="icatcherLink(data.collectionId)"><img style="max-width: 80%; max-height: 44px;" src="../assets/Listen_on_iCatcher.png"></a>
+                </div> 
+                <div class="extras">
+                  <div>iTunesID: {{ data.collectionId }}</div>
+                  <div><a :href="data.feedUrl">Podcast Feed</a></div>
+                </div>
               </div>
            </div>
          </div>
       </div>
   </div>
+</div>
+
 </template>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+ 
   .card {
-    max-width: 400px;padding:16px;
+    max-width: 400px;padding:32px;
   }
   .idented {
     padding-left:24px;padding-right: 24px;
@@ -31,6 +42,7 @@
 import { Result } from '../types/itunesTypes';
 import { defineComponent } from 'vue';
 import { itunesFindPodcastById, blankResult } from '../services/iTunesApi';
+import shared from '../stores/SearchResults';
 //import PodcastCard from '../components/PodcastCard.vue';
 
 //declare function updateMeta(id: any): any;
@@ -45,12 +57,22 @@ export default defineComponent({
       iTunesId: 0
     }
   },
+  setup(){
+    return  {
+      shared
+    }
+  },
   mounted(){
-    console.log("mounted");
+    console.log("PodcastById","mounted");
     this.find();
     this.updateMeta(Number(this.$route.params.id));
+    //console.log("PP",this.$props.results?.state.search);
   },
   methods: {
+    goBack() {
+        console.log(this.$router);
+        window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+    },
     updateMeta(id: number){
       var obj = document.querySelector('meta[name="apple-itunes-app"]');
       if (obj != null){

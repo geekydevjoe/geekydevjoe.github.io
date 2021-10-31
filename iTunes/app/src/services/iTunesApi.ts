@@ -22,7 +22,6 @@ export const itunesFindPodcastById = async (id:number):Promise<ItunesTypes> =>
     const headers = new Headers();
     //headers.append("Access-Control-Allow-Origin","*");
     headers.append("Accept","*/*");
-    const iTunesID = id;
     const url = `https://itunes.apple.com/lookup?id=${id}&r=${Math.random()}`;
     const request = new Request(
         url,
