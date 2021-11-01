@@ -1,7 +1,7 @@
 <template>
 <div>
   <div id="nav">
-    <button @click="goBack" class="btn btn-link">Home</button>
+    <router-link to="/">Home</router-link>
   </div>
   <div class="podcastContainer">  
       <div v-if="data" class="indented">
