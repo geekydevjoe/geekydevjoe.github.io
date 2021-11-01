@@ -91,7 +91,7 @@ export default defineComponent({
   .card img.artwork {
     border: solid 1px silver;
     width: 200px;
-    background-size: contain;
+    background-size: cover !important;
     height: 200px;
     background-position: center;
   }
