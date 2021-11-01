@@ -1,10 +1,9 @@
-import { reactive, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { ItunesTypes } from '../types/itunesTypes'
-//import { ref } from 'vue'
 
 export default reactive({
   state: {
-    search: "Test",
+    search: ref(""),
     loading: false,
     results: { resultCount: 0, results:[] } as ItunesTypes
   }

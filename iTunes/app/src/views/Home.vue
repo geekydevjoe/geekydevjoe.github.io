@@ -5,25 +5,23 @@
     </div>  
     
     <div class="home">
-        <form @submit="searchItunes(searchText)">
-          <input v-model="searchText"  placeholder="search for album"/>
-        </form>
-
+        <input v-model="searchText"  placeholder="search for album" v-on:change="searchItunes(searchText)" />
+      
         <div v-if="data.resultCount > 0" class="results">
-            <div class="card" v-for="data in data.results" :key="data.collectionName">
-                <div v-if="data.artworkUrl600 !=''">
-                <router-link :to="{ name: 'PodcastDetails',params:{id: data.collectionId} }">
-                <img :src="data.artworkUrl600" class="card-img-top rounded artwork" alt="podcast artwork" />
+            <div class="card" v-for="item in data.results" :key="item.collectionName">
+                <div v-if="item.artworkUrl600 !=''">
+                <router-link :to="{ name: 'PodcastDetails',params:{id: item.collectionId} }">
+                <img :src="item.artworkUrl600" class="card-img-top rounded artwork" alt="podcast artwork" />
                 </router-link>
                 </div>
                 <div class="card-body">
                     <div class="card-title">
-                      <h3>{{ data.collectionName }}</h3>
-                      <h5 class="secondary-text">{{ data.artistName }}</h5>
+                      <h3>{{ item.collectionName }}</h3>
+                      <h5 class="secondary-text">{{ item.artistName }}</h5>
                     </div>
                     <div class="card-text">
                       <div class="others">
-                        <a :href="icatcherLink(data.collectionId)"><img style="max-width: 80%;" src="../assets/Listen_on_iCatcher.png"></a>
+                        <a :href="icatcherLink(item.collectionId)"><img style="max-width: 80%;" src="../assets/Listen_on_iCatcher.png"></a>
                         <!-- <div class="extras">
                           <div>iTunesID: {{ data.collectionId }}</div>
                           <div><a :href="data.feedUrl">Podcast Feed</a></div>
@@ -40,52 +38,35 @@
 
 <script lang="ts">
 import { ItunesTypes } from '../types/itunesTypes';
-import { ref, defineComponent } from 'vue';
+import { ref, defineComponent, watchEffect } from 'vue';
 import { itunesSearch } from '../services/iTunesApi';
 import  shared from '../stores/SearchResults';
 
 export default defineComponent({
   name: 'Home',
-  components: {
-  },
-  // props: {
-  //   state: SearchResults
-  // },
-  data: () => {
+  setup() {
     return {
-      data: {} as ItunesTypes,
-      searchText: ""
-    }
-  },
-   setup(props) {
-
-  //   //const data = ref({ resultCount: 0, results:[]} as ItunesTypes);
-     console.log("props",props); // { user: '' }
-  //   //const searchTerm = props;
-  //   //const searchText = props.search;
-  //   //const data = props.results;
-  //   //const d = ref(props.value);
-    return {
-        shared
+      shared // from Search Results
+      ,data: ref({} as ItunesTypes)
+      ,searchText: ref("")
    }
   },
   mounted(){
-    console.log("mounted");
-    //console.log("data", this.dat);
-    //console.log(this.$props.state);
     this.data = this.shared.state.results;
+    this.searchText = this.shared.state.search;
   },
   methods: {
     icatcherLink(id: string){
       return `icatcher://itunes/${id}`;
     },
     async searchItunes(search:string){
-      console.log("searching");
       const value = await itunesSearch(search);
-      this.data = value;
+      this.shared.state.search = this.searchText;
       this.shared.state.results = value;
+      this.data = value;
     }
   }
+  
 });
 </script>
 <style scoped>

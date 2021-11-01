@@ -1,7 +1,7 @@
 <template>
 <div>
   <div id="nav">
-    <router-link to="/">Home</router-link>
+    <button @click="goBack" class="btn btn-link">Home</button>
   </div>
   <div class="podcastContainer">  
       <div v-if="data" class="indented">
@@ -66,12 +66,17 @@ export default defineComponent({
     console.log("PodcastById","mounted");
     this.find();
     this.updateMeta(Number(this.$route.params.id));
-    //console.log("PP",this.$props.results?.state.search);
   },
   methods: {
     goBack() {
-        console.log(this.$router);
-        window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+        //console.log(this.$router);
+        //console.log(window.history);
+        if (window.history.state.back == '/'){
+          window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
+        }
+        else {
+          this.$router.push('/')
+        }
     },
     updateMeta(id: number){
       var obj = document.querySelector('meta[name="apple-itunes-app"]');
@@ -84,7 +89,6 @@ export default defineComponent({
     },
     async find(){
       this.iTunesId = Number(this.$route.params.id);
-      console.log(this.iTunesId);
       await this.searchItunes(this.iTunesId);
     },
     async searchItunes(id:number){
@@ -95,7 +99,6 @@ export default defineComponent({
       else {
         this.data = value.results[0];
       }
-      console.log("data", value.results[0]);
     }
   }
 });
