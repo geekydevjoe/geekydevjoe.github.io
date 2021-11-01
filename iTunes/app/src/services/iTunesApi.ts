@@ -47,6 +47,7 @@ export const blankResult = (id:number):Result => {
   const result:Result = { collectionId: id, 
     collectionName: '', 
     album:'', 
+    artworkUrl30: '',
     artworkUrl100:'', 
     artworkUrl600:'', 
     artistName:'', 

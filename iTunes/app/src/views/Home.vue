@@ -11,7 +11,7 @@
             <div class="card" v-for="item in data.results" :key="item.collectionName">
                 <div v-if="item.artworkUrl600 !=''">
                 <router-link :to="{ name: 'PodcastDetails',params:{id: item.collectionId} }">
-                <img :src="item.artworkUrl600" class="card-img-top rounded artwork" alt="podcast artwork" />
+                <img :src="item.artworkUrl600" v-bind:style="imageStyle(item)" class="card-img-top rounded artwork"  />
                 </router-link>
                 </div>
                 <div class="card-body">
@@ -37,8 +37,8 @@
 </template>
 
 <script lang="ts">
-import { ItunesTypes } from '../types/itunesTypes';
-import { ref, defineComponent, watchEffect } from 'vue';
+import { ItunesTypes, Result } from '../types/itunesTypes';
+import { ref, defineComponent } from 'vue';
 import { itunesSearch } from '../services/iTunesApi';
 import  shared from '../stores/SearchResults';
 
@@ -58,6 +58,9 @@ export default defineComponent({
   methods: {
     icatcherLink(id: string){
       return `icatcher://itunes/${id}`;
+    },
+    imageStyle(item:Result){
+      return `background:url(${item.artworkUrl30}) no-repeat;`;
     },
     async searchItunes(search:string){
       const value = await itunesSearch(search);
@@ -87,7 +90,10 @@ export default defineComponent({
   }
   .card img.artwork {
     border: solid 1px silver;
-    max-width: 200px;
+    width: 200px;
+    background-size: contain;
+    height: 200px;
+    background-position: center;
   }
   .card {
     padding: 8px;
@@ -110,7 +116,7 @@ export default defineComponent({
 
   @media(max-width: 700px){
     .results {
-        row-gap: 24px; 
+        row-gap: 16px; 
       }
   }
   
