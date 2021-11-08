@@ -67,6 +67,13 @@ export default defineComponent({
     this.find();
     this.updateMeta(Number(this.$route.params.id));
   },
+  watch: {
+    $route(to, from) {
+      // react to route changes...
+      this.find();
+      this.updateMeta(Number(this.$route.params.id));
+    }
+  },
   methods: {
     goBack() {
         //console.log(this.$router);

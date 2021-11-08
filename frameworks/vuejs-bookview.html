@@ -184,13 +184,23 @@
             </tr>`
         }
 
+        class SharedData 
+        {
+            constructor(data)
+            {
+                this.counter = 0;
+                this.timeSlots = [];
+                this.startOfDay = DateHelper.startOfDay(new Date());
+                this.message =  "";
+            }
+        }
+
+        let shared = new SharedData();
+
         const App = {
-            data(){
+            data() {
                 return {
-                    counter: 0,
-                    timeSlots: [],
-                    startOfDay: DateHelper.startOfDay(new Date()),
-                    message: ""
+                    shared: shared
                 }
             },
             template: `
@@ -199,7 +209,7 @@
             </div>
             
             <div style="position: sticky; top: 0px;height: 50px;background-color: white;padding-top:8px">
-                <h2>{{ message }}</h2>
+                <h2>{{ shared.message }}</h2>
             </div>
             <table class="table table-bordered" >
                 <thead class="thead-dark" style="position: sticky; top: 50px;">
@@ -212,7 +222,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <time-slot-row v-for="item of timeSlots"></time-slot-row>
+                    <time-slot-row v-for="item of shared.timeSlots"></time-slot-row>
+                    <tr>
+                        <td>{{ shared.timeSlots }}</td>
+                    </tr>
                 </tbody>
             </table>
             `,
@@ -221,10 +234,10 @@
                 'time-slot-row': TimeSlotRow
             },
             mounted(){
-                this.timeSlots = DateHelper.generateDateRanges(this.startOfDay, 8, 17, 15);
-                console.log("mounted");
-                console.log(`time slots ${this.timeSlots}`);
                 
+                this.shared.timeSlots = DateHelper.generateDateRanges(this.shared.startOfDay, 8, 17, 15);
+                console.log("mounted",`time slots ${this.shared.timeSlots}`);
+                console.log("mounted", this.shared.startOfDay);
             }
         };
 

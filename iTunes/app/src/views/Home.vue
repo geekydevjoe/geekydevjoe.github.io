@@ -5,7 +5,7 @@
     </div>  
     
     <div class="home">
-        <input v-model="searchText"  placeholder="search for album" v-on:change="searchItunes(searchText)" />
+        <input v-model="searchText"  placeholder="search for album" v-on:change="searchItunes($event, searchText)" />
       
         <div v-if="data.resultCount > 0" class="results">
             <div class="card" v-for="item in data.results" :key="item.collectionName">
@@ -62,11 +62,14 @@ export default defineComponent({
     imageStyle(item:Result){
       return `background:url(${item.artworkUrl30}) no-repeat;`;
     },
-    async searchItunes(search:string){
+    async searchItunes(event:any, search:string){
       const value = await itunesSearch(search);
       this.shared.state.search = this.searchText;
       this.shared.state.results = value;
       this.data = value;
+      if (value.resultCount > 0 ){
+        event.target.blur();
+      }
     }
   }
   
@@ -108,13 +111,13 @@ export default defineComponent({
   .others {
     align-self:flex-end;
   }
-  @media(min-width: 700px){
+  @media(min-width: 800px){
     .results {
         column-gap: 24px; 
       }
   }
 
-  @media(max-width: 700px){
+  @media(max-width: 800px){
     .results {
         row-gap: 16px; 
       }
