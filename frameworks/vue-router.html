@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+        
+    </head>    
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+<body>
+    <style>
+        .fade-enter-active,
+        .fade-leave-action {
+            transition: opacity 2.5s;
+        }
+        .fade-enter,
+        .fade-leave-to {
+            opacity: 0;
+        }
+
+    </style>
+
+    <div class="container">
+        <div id="app">
+            <p>
+                <router-link to="/">Home</router-link>
+                &nbsp;
+                <router-link to="/foo">Go to Foo</router-link>
+                &nbsp;
+                <router-link to="/bar">Go to Bar</router-link>
+                &nbsp;
+                <router-link to="/parent/1/home">Parent</router-link>
+                
+            </p>
+            <router-view v-slot="{ Component }">
+                <transition name="fade">
+                    <component :is="Component"></component>
+                </transition>
+            </router-view>
+            <comp></comp>
+            <blog-post></blog-post>
+        </div>
+    </div>
+
+    <!-- JS, Popper.js, and jQuery -->
+<script src="https://unpkg.com/vue@next"></script>
+<script src="https://unpkg.com/vue-router@next"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js" type="text/javascript"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        const logging = {
+            methods: {
+                log: function(...data){
+                    console.log(this.$options.name, ...data);
+                }
+            }
+        };
+        
+        const Home = { template: "<div>Welcome Home</div>" };
+        const Foo = { template: "<div>foo</div>" };
+        const Bar = { template: "<div>bar</div>" };
+        const Parent = {
+            template:`<div>
+                    <div>parent {{ $router.currentRoute.value.params.id }}</div>
+                    <div><router-view></router-view></div>
+                </div>`
+        }
+
+        const routes = [
+            { path: "/", component:Home},
+            { path: "/foo", component:Foo},
+            { path: "/bar", component:Bar},
+            { 
+                path: "/parent/:id", 
+                component: Parent, 
+                children: [{ path:"Home", component:Home}]
+            }
+        ];
+
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes
+        });
+
+        // router.afterEach((to, from) => {
+        //     console.log(to, from);
+        // });
+
+        const shared = Vue.reactive({
+            title: "Joe Title"
+        });
+
+        var outsider = function(){
+            var self = this;
+            self.myShared = ko.observable(shared);
+            self.title = ko.observable("");
+            self.sharedChanged = ko.computed(function(){
+                let val = self.title();
+                console.log("Title", val);
+            });
+
+            self.change = function(newValue){
+                self.myShared().title = newValue;
+            }
+            
+            self.watching = Vue.watchEffect(() => { 
+                console.log("KO",shared.title); 
+                self.title(shared.title);
+            });
+
+        }
+        let out = new outsider();
+
+        const app = Vue.createApp({
+            name: 'MainApp',
+            //mixins: [logging],
+            mounted(){
+                //console.log(this.$options.name);
+                //this.logName = this.$options.name;
+                this.log("mounted");
+                //this.log(this.process);
+            },
+            data(){
+                return {
+                    shared: shared
+                }
+            },
+            created(){
+                this.log("App created","info");
+            },
+            methods: {
+                
+            },
+            watch:{
+                $route(){
+                    console.log(this.$route);
+                },
+                "shared.title": function(newValue){
+                    console.warn("shared.title", newValue);
+                }
+            }
+        });
+
+        // inject logging mixin for unified logging
+        app.mixin(logging);
+        
+        const component = {
+            name: 'A Component',
+            mounted(){
+                this.log("mounted");
+            },
+            template:`<b>Worst component ever</b>`
+        }
+        app.component('comp', component);
+
+        app.component('blog-post-statistics', {
+            name: 'BlogPostStats',
+            inject: ["post"],
+            template:`<b>{{ post.author }}</b>`,
+            created(){
+                console.log(this.post);
+            }
+        });
+        
+        app.component('blog-post', {
+            name: 'BlogPost',
+            data() {
+                return {
+                    post: { title: 'Hello world', author: 'James' }
+                };
+            },
+            provide() {
+                return  {
+                    post: this.post
+                }
+            },
+            template: `
+                <div>
+                {{ post.title }}
+                <blog-post-statistics></blog-post-statistics>    
+                </div>
+            `
+        });
+        app.use(router);
+        app.mount("#app");
+
+        
+    </script>
+</body>
+</html>
+
