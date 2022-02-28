@@ -17,8 +17,23 @@
         .fade-leave-to {
             opacity: 0;
         }
+        
+        :root {
+            --normal-bg-color: #EEE;
+            --normal-txt-color: black;
+            --dark-v1-bg-color:#4D4D4D;
+            --dark-v2-bg-color:#2D2D2D;
+            --dark-txt-color: #EEE;
+        }
 
     </style>
+
+<div style="background-color: var(--normal-bg-color);color:var(--normal-txt-color)">
+    <h2>Test String</h2>
+</div>
+<div style="background-color: var(--dark-v2-bg-color);color:var(--dark-txt-color)">
+    <h2>Test String</h2>
+</div>
 
     <div class="container">
         <div id="app">
@@ -32,6 +47,9 @@
                 <router-link to="/parent/1/home">Parent</router-link>
                 
             </p>
+            <div>
+                Shared Date: {{ shared.sharedDate }}
+            </div>
             <router-view v-slot="{ Component }">
                 <transition name="fade">
                     <component :is="Component"></component>
@@ -61,6 +79,31 @@
         const Home = { template: "<div>Welcome Home</div>" };
         const Foo = { template: "<div>foo</div>" };
         const Bar = { template: "<div>bar</div>" };
+        const GetDate = { template: `<div>Date div {{ date }}</div>`,
+            props: {
+            },
+            mounted(){
+                this.date = this.$route.params.date;
+                console.log(`Date: ${this.date}`);
+            },
+            data(){
+                return {
+                    date: null,
+                    shared: shared
+
+                }
+            },
+            watch:{
+                date: function(newValue){
+                    console.log(`Date changed`);
+                },
+                $route: function(newValue){
+                    //console.log("GetDate",this.$route.params.date);
+                    this.date = newValue.params.date;
+                    this.shared.sharedDate = this.date;
+                }
+            }
+        }
         const Parent = {
             template:`<div>
                     <div>parent {{ $router.currentRoute.value.params.id }}</div>
@@ -76,6 +119,10 @@
                 path: "/parent/:id", 
                 component: Parent, 
                 children: [{ path:"Home", component:Home}]
+            },
+            { 
+                path: "/date/:date", 
+                component: GetDate
             }
         ];
 
@@ -89,7 +136,8 @@
         // });
 
         const shared = Vue.reactive({
-            title: "Joe Title"
+            title: "Joe Title",
+            sharedDate: null
         });
 
         var outsider = function(){
@@ -139,6 +187,9 @@
                 },
                 "shared.title": function(newValue){
                     console.warn("shared.title", newValue);
+                },
+                "shared.sharedDate": function(newValue){
+                    console.log("Shared Date", newValue);
                 }
             }
         });
