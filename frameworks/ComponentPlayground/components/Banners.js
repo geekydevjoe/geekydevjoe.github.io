@@ -1,7 +1,7 @@
 const warningBanner = {
     template:`
         <div class="alert alert-warning">
-            <strong>{{ label_ }}</strong> <slot>Middle Content</slot>.
+            <strong>{{ label_ }}</strong> <slot>Middle Content</slot>
         </div>
     `,
     props:{
@@ -20,13 +20,12 @@ const warningBanner = {
             this.label_ = newValue;
         }
     }
-
 }
 
 const infoBanner = {
     template:`
         <div class="alert alert-info">
-            <strong>{{ label_ }}</strong> <slot>Middle Content</slot>.
+            <strong>{{ label_ }}</strong> <slot>Middle Content</slot>
         </div>
     `,
     props:{
@@ -46,6 +45,7 @@ const infoBanner = {
         }
     }
 }
+
 const dangerBanner = {
     template:`
         <div class="alert alert-danger">

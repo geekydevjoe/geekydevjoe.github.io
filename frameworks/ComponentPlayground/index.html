@@ -55,15 +55,22 @@
                 
             </form>
             <div class="mb-3">
-                <component v-if="hasSlots" :is="selectedComponent" :label="shared.selected.label">
-                    {{ slot }}
-                </component>
-                <component v-if="shared.selected && !hasSlots" :is="selectedComponent" v-model="model" :label="shared.selected.label">
-                </component>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" v-if="shared.selected">
+                            {{ shared.selected.name }}
+                        </h5>
+                        <p class="card-text">
+                            <pre v-if="shared.selected">{{ shared.selected }}</pre>
+                        </p>
+                        <component v-if="hasSlots" :is="selectedComponent" :label="shared.selected.label">
+                            {{ slot }}
+                        </component>
+                        <component v-if="shared.selected && !hasSlots" :is="selectedComponent" v-model="model" :label="shared.selected.label">
+                        </component>
+                    </div>
+                </div>
             </div>
-
-            <br/>
-            <pre>{{ shared.components }}</pre>
         </div>
     </div>
 
@@ -85,7 +92,7 @@
         };
 
         class MyComp {
-            constructor(name, hasSlot, label){
+            constructor(name, hasSlot, label, template){
                 this.name = name;
                 this.hasSlot = hasSlot;
                 this.label = label;
@@ -95,11 +102,21 @@
         }
         
         const shared = Vue.reactive({
-            components: [new MyComp('baseInput',false), 
+            components: [new MyComp('baseInput',false, 'Base Input'), 
                          new MyComp('dangerBanner', true, "Danger"), 
                          new MyComp('warningBanner', true, "Warning"),
                          new MyComp('infoBanner', true, "Info")],
-            selected: null
+            selected: null,
+            doSomething: function(data){
+                setTimeout(()=> {
+                    this.selected = data;
+                }, 1000);
+            }
+        });
+
+        Vue.watchEffect(() => {
+            console.log('Selected changed',`${shared.selected && shared.selected.name}`);
+            document.title = shared.selected && shared.selected.name;
         });
 
         const app = Vue.createApp({
@@ -118,6 +135,10 @@
             },
             created(){
                 this.log("App created","info");
+            },
+            mounted(){
+                console.log(shared._selected);
+                shared.doSomething(shared.components[0]);
             },
             methods: {
             },
@@ -141,6 +162,9 @@
             watch:{
                 "shared.sharedDate": function(newValue){
                     console.log("Shared Date", newValue);
+                },
+                "shared.selected":function(newValue){
+                    console.log("Shared.Selected", newValue);
                 }
             }
         });
