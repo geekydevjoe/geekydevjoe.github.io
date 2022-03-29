@@ -1,4 +1,4 @@
-import { reactive, ref, watch } from 'vue'
+import { reactive, ref } from 'vue'
 import { ItunesTypes } from '../types/itunesTypes'
 
 export default reactive({

@@ -68,7 +68,7 @@ export default defineComponent({
     this.updateMeta(Number(this.$route.params.id));
   },
   watch: {
-    $route(to, from) {
+    $route() {
       // react to route changes...
       this.find();
       this.updateMeta(Number(this.$route.params.id));
@@ -78,6 +78,7 @@ export default defineComponent({
     goBack() {
         //console.log(this.$router);
         //console.log(window.history);
+        console.log("Goback");
         if (window.history.state.back == '/'){
           window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
         }
@@ -95,16 +96,22 @@ export default defineComponent({
       return `icatcher://itunes/${id}`;
     },
     async find(){
-      this.iTunesId = Number(this.$route.params.id);
-      await this.searchItunes(this.iTunesId);
+      console.log("find");
+      this.iTunesId = Number(this.$route.params.id || 0);
+      if (this.iTunesId > 0){
+        await this.searchItunes(this.iTunesId);
+      }
     },
     async searchItunes(id:number){
-      const value = await itunesFindPodcastById(id);
-      if (value.resultCount == 0){
-        this.data = blankResult(id);
-      }
-      else {
-        this.data = value.results[0];
+      console.log("Search Itunes");
+      if (id && id > 0){
+        const value = await itunesFindPodcastById(id);
+        if (value.resultCount == 0){
+          this.data = blankResult(id);
+        }
+        else {
+          this.data = value.results[0];
+        }
       }
     }
   }
