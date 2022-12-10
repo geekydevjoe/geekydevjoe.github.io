@@ -5,7 +5,7 @@
     <router-view />
   </div>
 </template>
-<script>
+<script lang="ts">
 // import SearchResults from './stores/SearchResults';
 
 // export default {
